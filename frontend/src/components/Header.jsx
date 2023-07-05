@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
-import logo from '../images/ME.png'
+import logo from '../images/myntra.png'
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
