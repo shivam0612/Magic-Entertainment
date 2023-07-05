@@ -15,7 +15,7 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cpassword, setCpassword] = useState('');
-  const [preference, setPreference] = useState('')
+  const [preference, setPreference] = useState('Other')
   const [phone, setPhone] = useState('')
 
   const dispatch = useDispatch();
@@ -110,12 +110,19 @@ const RegisterScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
+    const payload = {
+      name,
+      email,
+      phone,
+      preference, // Include the preference value in the payload
+      password,
+      cpassword
+    };
     if (password !== cpassword) {
       toast.error('Passwords do not match');
     } else {
       try {
-        const res = await register({ name, email, phone, preference, password, cpassword }).unwrap();
+        const res = await register(payload).unwrap();
         dispatch(setCredentials({ ...res }));
         navigate('/');
       } catch (err) {
@@ -204,11 +211,11 @@ const RegisterScreen = () => {
                             onChange={(e) => setPreference(e.target.value)}
                             id="preference"
                           >
+                            <option value="Other">Other</option>
                             <option value="Music">Music</option>
                             <option value="Movies">Movies</option>
                             <option value="Games">Games</option>
                             <option value="Singing">Singing</option>
-                            <option value="Other">Other</option>
                           </select>
                           <label className="form-label" style={{ marginLeft: '1em' }} htmlFor="preference">Preference</label>
                         </div>
