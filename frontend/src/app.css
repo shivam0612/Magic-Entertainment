@@ -100,11 +100,17 @@
   }
   
   /* Home page */
+  .navbar {
+    width: 100%;
+    z-index: 1;
+  }
+  
   .home {
     display: flex;
-    height: calc(100vh - 65px);
+    height: calc(100vh - 82px);
     position: relative;
   }
+
   
   .left-side {
     flex: 1;

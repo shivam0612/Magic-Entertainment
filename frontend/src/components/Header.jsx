@@ -1,15 +1,11 @@
-// import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
-import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
+import logo from '../images/ME.png'
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,45 +22,91 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
-        <Container>
-          <LinkContainer to='/'>
-            <Navbar.Brand>MERN Auth</Navbar.Brand>
-          </LinkContainer>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='ms-auto'>
-              {userInfo ? (
-                <>
-                  <NavDropdown title={userInfo.name} id='username'>
-                    <LinkContainer to='/profile'>
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </>
-              ) : (
-                <>
-                  <LinkContainer to='/login'>
-                    <Nav.Link>
-                      <FaSignInAlt /> Sign In
-                    </Nav.Link>
-                  </LinkContainer>
-                  <LinkContainer to='/register'>
-                    <Nav.Link>
-                      <FaSignOutAlt /> Sign Up
-                    </Nav.Link>
-                  </LinkContainer>
-                </>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </header>
+    <nav className="navbar shadow navbar-expand-lg bg-body-tertiary">
+      <div className="container-fluid">
+        <NavLink className="navbar-brand" to="/">
+          <img src={logo} alt="logo" />
+        </NavLink>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            {userInfo ? (
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/">
+                    Home
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/service">
+                    Service
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/contact">
+                    Contact
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/profile">
+                    {userInfo.name}
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link btn btn-link" onClick={logoutHandler}>
+                    Logout
+                  </NavLink>
+                </li>
+              </>
+
+            ) : (
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/">
+                    Home
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/service">
+                    Service
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/contact">
+                    Contact
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/profile">
+                    Profile
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/login">
+                    Login
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/register">
+                    Register
+                  </NavLink>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
+      </div>
+    </nav>
   );
 };
 

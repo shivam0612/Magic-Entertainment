@@ -28,19 +28,18 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
-
+  const { name, email, phone, preference, password, cpassword } = req.body;
   const userExists = await User.findOne({ email });
 
   if (userExists) {
     res.status(400);
     throw new Error('User already exists');
   }
-
+  if (!name || !email || !phone || !preference || !password || !cpassword) {
+    return res.status(400).json({ error: 'Please provide all required fields' });
+  }
   const user = await User.create({
-    name,
-    email,
-    password,
+    name, email, phone, preference, password, cpassword,
   });
 
   if (user) {
@@ -50,6 +49,10 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phone: user.phone,
+      preference: user.preference,
+      password: user.password,
+      cpassword: user.cpassword,
     });
   } else {
     res.status(400);

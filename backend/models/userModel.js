@@ -5,16 +5,28 @@ const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
+      required: true
+    },
+    phone: {
+      type: Number,
+      required: true
+    },
+    preference: {
+      type: String,
+      enum: ['Music', 'Movies', 'Games', 'Singing', 'Other'],
+      default: 'Other'
     },
     password: {
       type: String,
-      required: true,
+      required: true
+    },
+    cpassword: {
+      type: String,
+      required: true
     },
   },
   {
@@ -35,6 +47,7 @@ userSchema.pre('save', async function (next) {
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+  this.cpassword = await bcrypt.hash(this.cpassword, salt);
 });
 
 const User = mongoose.model('User', userSchema);
