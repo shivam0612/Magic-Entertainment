@@ -125,7 +125,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   POST /api/users/contact
 // @access  Public
 const sendContactEmail = asyncHandler(async (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, email, subject, message } = req.body;
   // console.log({ name, email, message })
 
   // Create a transporter
@@ -140,7 +140,7 @@ const sendContactEmail = asyncHandler(async (req, res) => {
   const mailOptions = {
     from: 'Magicentertainment@FUN.com',
     to: 'shivampatel868@yahoo.com',
-    subject: 'Email from Magic Entertainment Portal',
+    subject: subject,
     text: `New Message From:
     Name: ${name},
     Email: ${email},
