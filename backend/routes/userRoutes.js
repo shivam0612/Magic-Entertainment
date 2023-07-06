@@ -7,6 +7,9 @@ import {
   updateUserProfile,
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
+import { sendContactEmail } from '../controllers/userController.js';
+import nodemailer from 'nodemailer';
+
 
 const router = express.Router();
 
@@ -17,5 +20,12 @@ router
   .route('/profile')
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
+
+
+// @desc    Send contact form email
+// @route   POST /api/users/contact
+// @access  Public
+router.post('/contact', sendContactEmail);
+
 
 export default router;

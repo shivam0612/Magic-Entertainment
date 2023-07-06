@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
+import nodemailer from 'nodemailer';
+
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
@@ -116,10 +118,51 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error('User not found');
   }
 });
+
+
+
+// @desc    Send contact form email
+// @route   POST /api/users/contact
+// @access  Public
+const sendContactEmail = asyncHandler(async (req, res) => {
+  const { name, email, message } = req.body;
+  // console.log({ name, email, message })
+
+  // Create a transporter
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'shivampatel868@gmail.com',
+      pass: 'cskkcvfzdswlcwkp',
+    },
+  });
+
+  const mailOptions = {
+    from: 'Magicentertainment@FUN.com',
+    to: 'shivampatel868@yahoo.com',
+    subject: 'Email from Magic Entertainment Portal',
+    text: `New Message From:
+    Name: ${name},
+    Email: ${email},
+    Message: ${message}`,
+  };
+
+  transporter
+    .sendMail(mailOptions)
+    .then((info) => {
+      res.status(200).json({ message: 'Email Sent successfully' });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+});
+
 export {
   authUser,
   registerUser,
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  sendContactEmail,
 };
