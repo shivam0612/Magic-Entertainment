@@ -18,6 +18,7 @@ import ProfileScreen from './screens/ProfileScreen.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import ServiceScreen from './screens/ServiceScreen';
 import ContactScreen from './screens/ContactScreen';
+import MSHome from './screens/moviesandsongs/MSHome.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,9 +29,11 @@ const router = createBrowserRouter(
       <Route path='/service' element={<ServiceScreen />} />
       <Route path='/contact' element={<ContactScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
+      {/* <Route path='/mshome' element={<MSHome />} /> */}
 
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
+        <Route path='/mshome' element={<MSHome />} />
       </Route>
     </Route>
   )

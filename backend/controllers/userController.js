@@ -19,6 +19,8 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phone: user.phone,
+      preference: user.preference,
     });
   } else {
     res.status(401);
@@ -54,8 +56,6 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       phone: user.phone,
       preference: user.preference,
-      password: user.password,
-      cpassword: user.cpassword,
     });
   } else {
     res.status(400);
@@ -64,10 +64,10 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Logout user / clear cookie
-// @route   POST /api/users/logout
+// @route   POST /api/users/ out
 // @access  Public
 const logoutUser = (req, res) => {
-  res.cookie('jwt', '', {
+  res.clearCookie('jwt', '', {
     httpOnly: true,
     expires: new Date(0),
   });
@@ -79,12 +79,13 @@ const logoutUser = (req, res) => {
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-
   if (user) {
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
+      phone: user.phone,         // Include the 'phone' field
+      preference: user.preference,   // Include the 'preference' field
     });
   } else {
     res.status(404);
@@ -101,6 +102,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.phone = req.body.phone || user.phone;
+    user.preference = req.body.preference || user.preference;
 
     if (req.body.password) {
       user.password = req.body.password;

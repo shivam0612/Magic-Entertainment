@@ -127,6 +127,7 @@ body {
   flex: 1;
   background-color: rgb(252, 252, 167);
 }
+
 .welcome-text {
   position: absolute;
   top: 50%;
@@ -154,16 +155,20 @@ body {
 }
 
 @keyframes animate {
+
   0%,
   100% {
     background-position: left top;
   }
+
   25% {
     background-position: right bottom;
   }
+
   50% {
     background-position: left bottom;
   }
+
   75% {
     background-position: right top;
   }
@@ -181,8 +186,11 @@ body {
 }
 
 /* profile page */
-.profile-body {
-  width: 70%;
+.container-profile{
+  width: 60% !important;
+}
+.profile-form {
+  width: 80%;
   margin: auto;
 }
 
@@ -276,7 +284,7 @@ body {
   letter-spacing: 2px;
 }
 
-
+/* Service Page */
 
 
 
