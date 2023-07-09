@@ -19,6 +19,9 @@ import PrivateRoute from './components/PrivateRoute.jsx';
 import ServiceScreen from './screens/ServiceScreen';
 import ContactScreen from './screens/ContactScreen';
 import MSHome from './screens/moviesandsongs/MSHome.jsx';
+import LandingPage from './screens/moviesandsongs/LandingPage.jsx';
+import DetailedVideoPage from './screens/moviesandsongs/DetailedVideoPage/DetailedVideoPage.jsx'
+import UploadVideoPage from "./screens/moviesandsongs/UploadVideoPage/UploadVideoPage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,7 +36,9 @@ const router = createBrowserRouter(
 
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
-        <Route path='/mshome' element={<MSHome />} />
+        <Route path='/mshome' element={<LandingPage />} />
+        <Route path='/video/:videoId' element={<DetailedVideoPage />} />
+        <Route path='/video/upload' element={<UploadVideoPage />} />
       </Route>
     </Route>
   )
