@@ -1,72 +1,52 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Gaming from '../images/gaming.png';
+import karaoke from '../images/Karaoke.jpg';
+import MandS from '../images/manss.jpg';
 import { useNavigate } from 'react-router-dom';
 
 const ServiceScreen = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleCardClick = (pageUrl) => {
-    navigate(pageUrl);
-  };
-
-  const handleSearch = () => {
-    // Perform search based on the searchQuery
-    // Example: navigate(`/search?query=${searchQuery}`);
-    console.log('Performing search for:', searchQuery);
+  const handleCardClick = (serviceName) => {
+    // Redirect to the service page based on the clicked card
+    navigate(`/${serviceName}`);
   };
 
   return (
-    <div className="service-page-container body-tag vh-100" style={{ marginTop: '17rem' }}>
-     
-      <div className="row">
-        <ServiceCard
-          title="Online Games"
-          description="Explore and play a wide variety of online games."
-          imageUrl="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp"
-          onClick={() => handleCardClick('/games')}
-        />
-        <ServiceCard
-          title="Online Karaoke"
-          description="Sing your heart out with our online karaoke service."
-          imageUrl="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp"
-          onClick={() => handleCardClick('/karaoke')}
-        />
-        <ServiceCard
-          title="Online Movies/TV/Songs Exploration"
-          description="Discover a vast collection of movies, TV shows, and songs online."
-          imageUrl="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp"
-          onClick={() => handleCardClick('/mshome')}
-        />
-      </div>
-      <div className="row">
-        <ServiceCard
-          title="Others"
-          description="Explore other online services we offer."
-          imageUrl="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp"
-          onClick={() => handleCardClick('/other')}
-        />
-      </div>
+    <>
+      <div className="custom-container body-tag vh-100">
+        <h3 className="title">OUR SERVICES</h3>
 
-    </div>
-  );
-};
+        <div className="product-container">
+          <div className="product shadow" data-name="p-1" onClick={() => handleCardClick('gaming')}>
+            <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="" />
+            <h3>Gaming</h3>
+            <div className="availability">Play, Win, Repeat, Dominate, Conquer</div>
+          </div>
 
-const ServiceCard = ({ title, description, imageUrl, onClick }) => {
-  return (
-    <div className="col-sm-4" onClick={onClick}>
-      <div className="card">
-        <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-          <img src={imageUrl} className="img-fluid" alt="Card background" />
-          <a href="#!">
-            <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
-          </a>
-        </div>
-        <div className="card-body">
-          <h5 className="card-title">{title}</h5>
-          <p className="card-text">{description}</p>
+          <div className="product shadow" data-name="p-2" onClick={() => handleCardClick('karaoke')}>
+            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="" />
+            <h3>Karaoke</h3>
+            <div className="availability">Sing Your Heart Out, Everywhere</div>
+          </div>
+
+          <div className="product shadow" data-name="p-3" onClick={() => handleCardClick('mshome')}>
+            <img src="https://img.freepik.com/free-vector/cinema-movie-illustration_24908-57118.jpg?w=740&t=st=1688944189~exp=1688944789~hmac=c299f60948806e79623d5a2d99771b817e9c9d409fcc80e59825a2a8c44513ee" alt="" />
+            <h3>Movies and Songs</h3>
+            <div className="desc">Unlimited Entertainment at Your Fingertips</div>
+          </div>
+
+          <div className="product shadow" data-name="p-4" onClick={() => handleCardClick('others')}>
+            <img
+              src="https://images.unsplash.com/photo-1497005367839-6e852de72767?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=867&q=80"
+              alt=""
+            />
+            <h3>Others</h3>
+            <div className="desc">Watch Online</div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

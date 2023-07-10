@@ -36,7 +36,7 @@ const router = createBrowserRouter(
 
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
-        <Route path='/mshome' element={<LandingPage />} />
+        <Route path='/mshome' element={<MSHome />} />
         <Route path='/video/:videoId' element={<DetailedVideoPage />} />
         <Route path='/video/upload' element={<UploadVideoPage />} />
       </Route>
