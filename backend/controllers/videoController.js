@@ -87,35 +87,17 @@ const UploadVideo = asyncHandler(async (req, res) => {
 
 
 const getVideos = asyncHandler(async (req, res) => {
-    Video.find()
-        .populate('writer')
-        .exec((err, videos) => {
-            if (err) {
-                return res.status(400).send(err);
-            }
-            return res.status(200).json({ success: true, videos });
-        });
-})
+    try {
+        const videos = await Video.find();
+        // console.log(videos)
+        return res.status(200).json({ success: true, videos });
+    } catch (err) {
+        console.log(err)
+        return res.status(400).send(err);
+    }
+});
 
-const getSusVideos = asyncHandler(async (req, res) => {
-    Subscriber.find({ userFrom: req.body.userFrom }).exec((err, subscribers) => {
-        if (err) return res.status(400).send(err);
-
-        let subscribedUser = [];
-
-        subscribers.map((subscriber, i) => {
-            subscribedUser.push(subscriber.userTo);
-        });
-
-        Video.find({ writer: { $in: subscribedUser } })
-            .populate('writer')
-            .exec((err, videos) => {
-                if (err) return res.status(400).send(err);
-                res.status(200).json({ success: true, videos });
-            });
-    });
-})
 
 export {
-    uploadFiles, tumbnailsOfVideo, UploadVideo, getVideos, getSusVideos
+    uploadFiles, tumbnailsOfVideo, UploadVideo, getVideos
 }
