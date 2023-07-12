@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home Page</title>
+  <style>
+    /* Slide Bar Hero Section */
+    .hero {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      animation: slideAnimation 8s infinite;
+    }
+
+    @keyframes slideAnimation {
+      0% { opacity: 1; }
+      20% { opacity: 0; }
+      25% { opacity: 0; }
+      45% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+
+    /* Centered Text Section */
+    .centered-text {
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="slide" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWje_gjVcmi-wks5nTRnW_xv5W2l3MVnk7W1QDcZuhNg&s');"></div>
+    <div class="slide" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWje_gjVcmi-wks5nTRnW_xv5W2l3MVnk7W1QDcZuhNg&s');"></div>
+    <div class="slide" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWje_gjVcmi-wks5nTRnW_xv5W2l3MVnk7W1QDcZuhNg&s');"></div>
+  </div>
+  <div class="centered-text">
+    <h2>Welcome to Magic Entertainment!</h2>
+    <p>We offer a wide range of movies and songs on our online platform.</p>
+  </div>
+</body>
+</html>

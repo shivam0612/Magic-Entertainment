@@ -8,6 +8,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import './app.css';
+import './features.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import store from './store';
 import { Provider } from 'react-redux';
@@ -18,11 +19,10 @@ import ProfileScreen from './screens/ProfileScreen.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import ServiceScreen from './screens/ServiceScreen';
 import ContactScreen from './screens/ContactScreen';
+// features import
 import MSHome from './screens/moviesandsongs/MSHome.jsx';
-import LandingPage from './screens/moviesandsongs/LandingPage.jsx';
-import DetailedVideoPage from './screens/moviesandsongs/DetailedVideoPage/DetailedVideoPage.jsx'
-import UploadVideoPage from "./screens/moviesandsongs/UploadVideoPage/UploadVideoPage.jsx";
-
+import UploadVideoPage from "./screens/moviesandsongs/UploadVideoPage.jsx";
+import HomepageofMS from './screens/moviesandsongs/Home.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
@@ -36,8 +36,8 @@ const router = createBrowserRouter(
 
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
+        <Route path='/homepageofms' element={<HomepageofMS />} />
         <Route path='/mshome' element={<MSHome />} />
-        <Route path='/video/:videoId' element={<DetailedVideoPage />} />
         <Route path='/video/upload' element={<UploadVideoPage />} />
       </Route>
     </Route>

@@ -30,7 +30,7 @@ const ServiceScreen = () => {
             <div className="availability">Sing Your Heart Out, Everywhere</div>
           </div>
 
-          <div className="product shadow" data-name="p-3" onClick={() => handleCardClick('mshome')}>
+          <div className="product shadow" data-name="p-3" onClick={() => handleCardClick('homepageofms')}>
             <img src="https://img.freepik.com/free-vector/cinema-movie-illustration_24908-57118.jpg?w=740&t=st=1688944189~exp=1688944789~hmac=c299f60948806e79623d5a2d99771b817e9c9d409fcc80e59825a2a8c44513ee" alt="" />
             <h3>Movies and Songs</h3>
             <div className="desc">Unlimited Entertainment at Your Fingertips</div>

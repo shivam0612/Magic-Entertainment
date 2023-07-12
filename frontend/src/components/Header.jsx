@@ -2,7 +2,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
-import logo from '../images/myntra.png'
+import logo from '../images/logo2.gif'
+import logo2 from '../images/logo1.gif'
+
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -25,7 +27,10 @@ const Header = () => {
     <nav className="navbar shadow navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="/">
-          <img src={logo} alt="logo" />
+          <div className="logo-container">
+            <img src={logo2}  alt="logo" />
+            <img src={logo} alt="logo" />
+          </div>
         </NavLink>
         <button
           className="navbar-toggler"
@@ -39,7 +44,7 @@ const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+          <ul className="navbar-nav navbar-link ms-auto mb-2 mb-lg-0">
             {userInfo ? (
               <>
                 <li className="nav-item">
@@ -58,7 +63,7 @@ const Header = () => {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/profile">
+                  <NavLink className="nav-link" style={{color:"#27ae60"}} to="/profile">
                     {userInfo.name}
                   </NavLink>
                 </li>
