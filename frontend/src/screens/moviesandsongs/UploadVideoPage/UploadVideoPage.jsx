@@ -88,7 +88,7 @@ function UploadVideoPage(props) {
     }
 
     const variables = {
-      writer: userInfo._id,
+      user: userInfo.name,
       title: title,
       description: description,
       privacy: privacy,

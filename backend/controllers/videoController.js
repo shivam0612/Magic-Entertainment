@@ -52,7 +52,7 @@ const tumbnailsOfVideo = asyncHandler(async (req, res) => {
 
         ffmpeg(req.body.filePath)
             .on('filenames', function (filenames) {
-                console.log('Will generate ' + filenames.join(', '));
+                // console.log('Will generate ' + filenames.join(', '));
                 thumbsFilePath = 'uploads/thumbnails/' + filenames[0];
             })
             .on('end', function () {
@@ -76,6 +76,7 @@ const tumbnailsOfVideo = asyncHandler(async (req, res) => {
 const UploadVideo = asyncHandler(async (req, res) => {
     // console.log(req.body);
     const video = new Video(req.body);
+    // console.log(video)
 
     try {
         await video.save();
