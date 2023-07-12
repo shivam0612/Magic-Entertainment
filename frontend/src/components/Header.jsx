@@ -24,8 +24,8 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar shadow navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
+    <nav className="navbar shadow navbar-expand-lg bg-body-tertiary" >
+      <div className="container-fluid" style={{backgroundColor:"#e0f2f1"}}>
         <NavLink className="navbar-brand" to="/">
           <div className="logo-container">
             <img src={logo2}  alt="logo" />

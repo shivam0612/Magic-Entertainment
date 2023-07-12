@@ -8,7 +8,6 @@ const ServiceScreen = () => {
   const navigate = useNavigate();
 
   const handleCardClick = (serviceName) => {
-    // Redirect to the service page based on the clicked card
     navigate(`/${serviceName}`);
   };
 

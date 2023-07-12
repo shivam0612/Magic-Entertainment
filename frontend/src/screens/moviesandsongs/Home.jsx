@@ -1,13 +1,69 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
+const Slideshow = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % 3);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div>
+      {currentSlide === 0 && (
+        <div>
+          <img
+            className="d-block w-100"
+            style={{
+              height: '55vh',
+              objectFit: 'cover',
+              objectPosition: 'center',
+            }}
+            src="https://assets.nflxext.com/ffe/siteui/vlv3/bff5732c-7d13-45d1-9fab-476db25a1827/9d801cfd-47dc-45a4-823d-b2dd11daadf1/CA-en-20230710-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+            alt="First slide"
+          />
+        </div>
+      )}
+      {currentSlide === 1 && (
+        <div>
+          <img
+            className="d-block w-100"
+            style={{
+              height: '55vh',
+              objectFit: 'cover',
+              objectPosition: 'center',
+            }}
+            src="https://storage.googleapis.com/kaggle-datasets-images/2587299/4416293/715bb18a4917ad2d3e8b9bd678f31d10/dataset-cover.jpg?t=2022-10-29-03-36-49"
+            alt="Second slide"
+          />
+        </div>
+      )}
+      {currentSlide === 2 && (
+        <div>
+          <img
+            className="d-block w-100"
+            style={{
+              height: '55vh',
+              objectFit: 'cover',
+              objectPosition: 'center',
+            }}
+            src="https://www.fullsail.edu/assets/ext/about/about-fsStories-hero/2022-holiday-blockbusters-grads-credited-on-multiple-hit-films-and-shows-hero.jpg"
+            alt="Third slide"
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Home = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  const handleSliderButtonClick = (index) => {
-    setCurrentSlide(index);
-  };
 
   const handleGetStartedClick = () => {
     navigate('/mshome');
@@ -21,36 +77,10 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const slides = document.querySelectorAll('.slide');
-
-    slides.forEach((slide, index) => {
-      slide.style.opacity = index === currentSlide ? 1 : 0;
-    });
-  }, [currentSlide]);
-
   return (
-    <div>
-      <div className="hero">
-        <div className="slide" style={{ backgroundImage: `url("https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=867&q=80")` }}></div>
-        <div className="slide" style={{ backgroundImage: `url("https://images.unsplash.com/photo-1598805538557-c09c3390f5e6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80")` }}></div>
-        <div className="slide" style={{ backgroundImage: `url("https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80")` }}></div>
-        <div className="slider-buttons">
-          <div
-            className={`slider-button ${currentSlide === 0 ? 'active' : ''}`}
-            onClick={() => handleSliderButtonClick(0)}
-          ></div>
-          <div
-            className={`slider-button ${currentSlide === 1 ? 'active' : ''}`}
-            onClick={() => handleSliderButtonClick(1)}
-          ></div>
-          <div
-            className={`slider-button ${currentSlide === 2 ? 'active' : ''}`}
-            onClick={() => handleSliderButtonClick(2)}
-          ></div>
-        </div>
-      </div>
-      <div className="centered-text">
+    <div >
+      <Slideshow />
+      <div className="centered-text mb-5">
         <h2>Welcome to Magic Entertainment!</h2>
         <p>We offer a wide range of movies and songs on our online platform.</p>
         <button className="get-started-button" onClick={handleGetStartedClick}>
