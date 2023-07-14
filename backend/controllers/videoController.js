@@ -1,10 +1,8 @@
 import asyncHandler from 'express-async-handler';
-import User from '../models/userModel.js';
 import multer from 'multer';
 import ffmpeg from 'fluent-ffmpeg';
 ffmpeg.setFfmpegPath('C:/Users/Administrator/Music/ffmpeg/bin/ffmpeg.exe');
 ffmpeg.setFfprobePath('C:/Users/Administrator/Music/ffmpeg/bin/ffprobe.exe');
-import Subscriber from '../models/Subscriber.js'
 import Video from '../models/Video.js'
 
 var storage = multer.diskStorage({

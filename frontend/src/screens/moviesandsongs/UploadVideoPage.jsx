@@ -4,6 +4,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -42,8 +45,9 @@ const Category = [
   },
 ];
 
-function UploadVideoPage(props) {
-  const {userInfo} = useSelector((state) => state.auth);
+const UploadVideoPage = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -69,12 +73,16 @@ function UploadVideoPage(props) {
     setCategories(event.target.value);
   };
 
+  const goBack = () => {
+    navigate('/mshome')
+  }
   const onSubmit = (event) => {
     event.preventDefault();
 
-    // if (user.userData && !user.userData.isAuth) {
-    //   return alert('Sign in first!');
-    // }
+    if (!userInfo) {
+      toast.error('Sign in first!');
+      return;
+    }
 
     if (
       title === '' ||
@@ -84,7 +92,8 @@ function UploadVideoPage(props) {
       duration === '' ||
       thumbnail === ''
     ) {
-      return alert('Fill in all fields before submitting!');
+      toast.error('Fill in all fields before submitting!');
+      return;
     }
 
     const variables = {
@@ -98,15 +107,19 @@ function UploadVideoPage(props) {
       thumbnail: thumbnail,
     };
 
-    axios.post('/api/video/uploadVideo', variables)
+    axios
+      .post('/api/video/uploadVideo', variables)
       .then((response) => {
         if (response.data.success) {
-          alert('Video uploaded successfully!');
-          props.history.push('/');
+          toast.success('Video uploaded successfully!');
+          navigate('/mshome');
         } else {
-          alert('Failed to upload video');
+          toast.error('Failed to upload video');
         }
-      }).unwrap();;
+      })
+      .catch((error) => {
+        toast.error('An error occurred while uploading the video');
+      });
   };
 
   const onDrop = (files) => {
@@ -116,7 +129,8 @@ function UploadVideoPage(props) {
     };
 
     formData.append('file', files[0]);
-    axios.post('/api/video/uploadfiles', formData, config)
+    axios
+      .post('/api/video/uploadfiles', formData, config)
       .then((response) => {
         if (response.data.success) {
           let variable = {
@@ -126,25 +140,32 @@ function UploadVideoPage(props) {
           setFilePath(response.data.filePath);
 
           // Create the thumbnail to display the uploaded video
-          axios.post('/api/video/thumbnail', variable)
+          axios
+            .post('/api/video/thumbnail', variable)
             .then((response) => {
               if (response.data.success) {
                 setDuration(response.data);
                 setThumbnail(response.data.thumbsFilePath);
               } else {
-                alert('Failed to create the thumbnail');
+                toast.error('Failed to create the thumbnail');
               }
+            })
+            .catch((error) => {
+              toast.error('An error occurred while creating the thumbnail');
             });
         } else {
-          alert('Video failed to save on the server');
+          toast.error('Video failed to save on the server');
         }
+      })
+      .catch((error) => {
+        toast.error('An error occurred while uploading the video file');
       });
   };
 
   return (
     <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
       <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-        <Title level={2} style={{ color: 'white' }}>Upload Video</Title>
+        <Title level={2} style={{ color: 'black' }}>Upload Video</Title>
       </div>
 
       <Form onSubmit={onSubmit}>
@@ -209,9 +230,14 @@ function UploadVideoPage(props) {
         </select>
         <br /><br />
 
-        <Button type="primary" size="large" onClick={onSubmit}>
-          Submit
-        </Button>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly', width:'50%', margin:'auto' }}>
+          <Button type="primary" size="large" onClick={onSubmit}>
+            Submit
+          </Button>
+          <Button type="primary" className='bg-danger' size="large" onClick={goBack}>
+            GoBack
+          </Button>
+        </div>
       </Form>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useGetVideosQuery } from '../../slices/videoApiSlice';
+import { useNavigate } from 'react-router-dom';
 
 const MSHome = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -8,7 +9,7 @@ const MSHome = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [activeSection, setActiveSection] = useState('online');
   const [isYouTubeVideo, setIsYouTubeVideo] = useState(true);
-
+  const navigate = useNavigate()
   const { data: videoss, isLoading, isError, refetch } = useGetVideosQuery();
 
   useEffect(() => {
@@ -24,6 +25,11 @@ const MSHome = () => {
 
     fetchData();
   }, []);
+
+  const handleAddVideos = () => {
+    navigate('/video/upload');
+  };
+
 
   const handleSearch = async () => {
     try {
@@ -172,9 +178,14 @@ const MSHome = () => {
             )
           )}
 
-          <button className="mt-5" onClick={() => setSelectedVideo(null)}>
-            Close Video
-          </button>
+          <div>
+            <button className="mt-5" onClick={() => setSelectedVideo(null)}>
+              Close Video
+            </button>
+            <button className="mt-5" onClick={handleAddVideos}>
+              Add Videos
+            </button>
+          </div>
         </div>
         <div className="pt-5" style={{ flex: '1', textAlign: 'center' }}>
           {activeSection === 'online' ? (

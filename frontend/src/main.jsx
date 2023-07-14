@@ -23,6 +23,9 @@ import ContactScreen from './screens/ContactScreen';
 import MSHome from './screens/moviesandsongs/MSHome.jsx';
 import UploadVideoPage from "./screens/moviesandsongs/UploadVideoPage.jsx";
 import HomepageofMS from './screens/moviesandsongs/Home.jsx'
+import MuseumHome from './screens/virtualmuseum/MuseumHome.jsx';
+
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
@@ -39,6 +42,7 @@ const router = createBrowserRouter(
         <Route path='/homepageofms' element={<HomepageofMS />} />
         <Route path='/mshome' element={<MSHome />} />
         <Route path='/video/upload' element={<UploadVideoPage />} />
+        <Route path='/museumhome' element={< MuseumHome/>} />
       </Route>
     </Route>
   )

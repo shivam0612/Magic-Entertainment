@@ -35,6 +35,15 @@ const ServiceScreen = () => {
             <div className="desc">Unlimited Entertainment at Your Fingertips</div>
           </div>
 
+          <div className="product shadow" data-name="p-4" onClick={() => handleCardClick('museumhome')}>
+            <img
+              src="https://images.unsplash.com/photo-1513038630932-13873b1a7f29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8TXVzZXVtfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+              alt=""
+            />
+            <h3>Virtual Museum</h3>
+            <div className="desc">Step into a virtual masterpiece</div>
+          </div>
+
           <div className="product shadow" data-name="p-4" onClick={() => handleCardClick('others')}>
             <img
               src="https://images.unsplash.com/photo-1497005367839-6e852de72767?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=867&q=80"

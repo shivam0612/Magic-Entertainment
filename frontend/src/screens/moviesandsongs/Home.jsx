@@ -65,10 +65,6 @@ const Home = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const handleGetStartedClick = () => {
-    navigate('/mshome');
-  };
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % 3);
@@ -77,13 +73,17 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleGetStarted = () => {
+    navigate('/mshome');
+  };
+
   return (
     <div >
       <Slideshow />
       <div className="centered-text mb-5">
         <h2>Welcome to Magic Entertainment!</h2>
         <p>We offer a wide range of movies and songs on our online platform.</p>
-        <button className="get-started-button" onClick={handleGetStartedClick}>
+        <button className="get-started-button" onClick={handleGetStarted}>
           Get Started
         </button>
       </div>

@@ -5,7 +5,7 @@
 
 /* Website body */
 .body-tag {
-  background-color: #f5faff;
+  background-color: #f5f5f5;
 }
 
 body {
@@ -206,7 +206,7 @@ body {
   gap: 2rem;
   border-radius: 15px;
 
-  background-color: #f5faff;
+  background-color: #f5f5f5;
   padding-bottom: 5rem;
 
 }
@@ -226,6 +226,7 @@ body {
 
 .custom-container .product-container .product:hover {
   outline-offset: 0;
+  background-color: #e0f2f1;
 }
 
 .custom-container .product-container .product img {
@@ -276,7 +277,7 @@ body {
 .contact-form-wrapper {
   padding: 3rem 0;
   padding-bottom: 14vh;
-  background-color: #f5faff;
+  background-color: #f5f5f5;
 }
 
 .contact-form {
@@ -353,9 +354,6 @@ body {
   font-weight: 500;
   letter-spacing: 2px;
 }
-
-/* Service Page */
-
 
 
 
