@@ -1,73 +1,6 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-
-// const MuseumHome = () => {
-//   const [artworks, setArtworks] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const apiKey = '1XhjQJNH';
-//         const apiUrl = 'https://www.rijksmuseum.nl/api/en/collection';
-
-//         const response = await axios.get(apiUrl, {
-//           params: {
-//             key: apiKey,
-//             format: 'json',
-//             imgonly: true,
-//           },
-//         });
-
-//         const responseData = response.data.artObjects || [];
-//         setArtworks(responseData);
-//         setLoading(false);
-//       } catch (error) {
-//         console.error(error);
-//         setError('An error occurred while fetching data.');
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   if (loading) {
-//     return <p>Loading...</p>;
-//   }
-
-//   if (error) {
-//     return <p>{error}</p>;
-//   }
-
-//   return (
-//     <div>
-//       <h2 style={{ textAlign: 'center' }}>Rijksmuseum Artworks</h2>
-//       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-//         {artworks.map((artwork) => (
-//           <div key={artwork.id} style={{ margin: '10px', width: '300px' }}>
-//             <img
-//               src={artwork.webImage.url}
-//               alt={artwork.title}
-//               style={{ width: '100%', height: 'auto' }}
-//             />
-//             <div>
-//               <h3>{artwork.title}</h3>
-//               <p>{artwork.description}</p>
-//               <p>Artist: {artwork.principalOrFirstMaker}</p>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MuseumHome;
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Card, Row, Col } from 'antd';
 
 const MuseumHome = () => {
   const [artworks, setArtworks] = useState([]);
@@ -77,25 +10,20 @@ const MuseumHome = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const apiUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects';
+        const apiKey = '1XhjQJNH';
+        const apiUrl = 'https://www.rijksmuseum.nl/api/en/collection';
 
         const response = await axios.get(apiUrl, {
           params: {
-            hasImages: true,
-            isPublicDomain: true,
+            key: apiKey,
+            format: 'json',
+            imgonly: true,
+            ps: 100,
           },
         });
-
-        const objectIDs = response.data.objectIDs || [];
-        const randomObjectIDs = getRandomObjectIDs(objectIDs, 8);
-        const artworkData = await Promise.all(
-          randomObjectIDs.map(async (objectID) => {
-            const artworkResponse = await axios.get(`${apiUrl}/${objectID}`);
-            return artworkResponse.data;
-          })
-        );
-
-        setArtworks(artworkData);
+        
+        const responseData = response.data.artObjects || [];
+        setArtworks(responseData);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -107,11 +35,6 @@ const MuseumHome = () => {
     fetchData();
   }, []);
 
-  const getRandomObjectIDs = (objectIDs, count) => {
-    const shuffledIDs = objectIDs.sort(() => 0.5 - Math.random());
-    return shuffledIDs.slice(0, count);
-  };
-
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -121,26 +44,31 @@ const MuseumHome = () => {
   }
 
   return (
-    <div>
-      <h2 style={{ textAlign: 'center' }}>Online Virtual Museum</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+<section className='body-tag ' style={{ paddingBottom: '2rem' }}>
+  <div className='museum-container'>
+    <h2 className='museum-heading pt-5'>Online Virtual Museum</h2>
+    <div className='museum-card'>
+      <Row gutter={[16, 16]}>
         {artworks.map((artwork) => (
-          <div key={artwork.objectID} style={{ margin: '10px', width: '300px' }}>
-            <img
-              src={artwork.primaryImage}
-              alt={artwork.title}
-              style={{ width: '100%', height: 'auto' }}
-            />
-            <div>
-              <h3>{artwork.title}</h3>
-              <p>{artwork.objectDate}</p>
-              <p>{artwork.artistDisplayName}</p>
-              <p>{artwork.culture}</p>
-            </div>
-          </div>
+          <Col span={8} key={artwork.id}>
+            <Card className='museum-card'>
+              <img
+                src={artwork.webImage.url}
+                alt={artwork.title}
+                style={{ width: '100%' }}
+              />
+              <div className='artwork-desc'>
+                <p className='artwork-title'>{artwork.title}</p>
+                {/* <p>{artwork.description}</p> */}
+                <p className='artwork-title'><strong>Artist: </strong> {artwork.principalOrFirstMaker}</p>
+              </div>
+            </Card>
+          </Col>
         ))}
-      </div>
+      </Row>
     </div>
+  </div>
+</section>
   );
 };
 

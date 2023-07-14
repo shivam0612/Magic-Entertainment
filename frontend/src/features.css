@@ -2,66 +2,136 @@
 # M and S page
 */
 .hero {
-    position: relative;
-    height: 400px;
-    overflow: hidden;
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  animation: slideAnimation 8s infinite;
+}
+
+@keyframes slideAnimation {
+  0% {
+    opacity: 1;
   }
-  
-  .slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    animation: slideAnimation 8s infinite;
+
+  20% {
+    opacity: 0;
   }
-  
-  @keyframes slideAnimation {
-    0% { opacity: 1; }
-    20% { opacity: 0; }
-    25% { opacity: 0; }
-    45% { opacity: 1; }
-    100% { opacity: 1; }
+
+  25% {
+    opacity: 0;
   }
-  
-  /* Slider Buttons */
-  .slider-buttons {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
+
+  45% {
+    opacity: 1;
   }
-  
-  .slider-button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #333;
-    margin: 0 5px;
-    cursor: pointer;
+
+  100% {
+    opacity: 1;
   }
-  
-  .slider-button.active {
-    background-color: #fff;
-  }
-  
-  /* Centered Text Section */
-  .centered-text {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  /* Get Started Button */
-  .get-started-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-  }
-  
+}
+
+/* Slider Buttons */
+.slider-buttons {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.slider-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #333;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.slider-button.active {
+  background-color: #fff;
+}
+
+/* Centered Text Section */
+.centered-text {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Get Started Button */
+.get-started-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+
+/* Online virtual Museum */
+.museum-card {
+  display: 'flex';
+  flex-wrap: 'wrap';
+  justify-content: 'center';
+  align-items: flex-start;
+}
+
+.museum-heading {
+  font-size: 2rem;
+  color: #444;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.artwork-title {
+  font-size: 1.1rem !important;
+}
+
+.museum-container {
+  width: 80%;
+  margin: auto;
+}
+
+.museum-card {
+  margin: '10px';
+  width: '300px';
+  position: relative;
+
+  height: 68vh;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 2px black;
+}
+
+.museum-card img{
+  height: 45vh !important;
+  object-fit: fill;
+  border-radius: 1rem;
+}
+
+.artwork-desc {
+  position: absolute;
+  bottom: 0 !important;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  height: 15vh;
+  text-align: center;
+  background-color: #eee;
+}
+
+.artwork-desc p {
+  margin: 0;
+}
