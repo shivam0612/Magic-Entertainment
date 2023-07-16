@@ -24,6 +24,7 @@ import MSHome from './screens/moviesandsongs/MSHome.jsx';
 import UploadVideoPage from "./screens/moviesandsongs/UploadVideoPage.jsx";
 import HomepageofMS from './screens/moviesandsongs/Home.jsx'
 import MuseumHome from './screens/virtualmuseum/MuseumHome.jsx';
+import SHome from './screens/subscription/SHome.jsx';
 
 
 const router = createBrowserRouter(
@@ -37,12 +38,14 @@ const router = createBrowserRouter(
       <Route path='/register' element={<RegisterScreen />} />
       {/* <Route path='/mshome' element={<MSHome />} /> */}
 
+
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
         <Route path='/homepageofms' element={<HomepageofMS />} />
         <Route path='/mshome' element={<MSHome />} />
         <Route path='/video/upload' element={<UploadVideoPage />} />
-        <Route path='/museumhome' element={< MuseumHome/>} />
+        <Route path='/shome' element={<SHome />} />
+        <Route path='/museumhome' element={< MuseumHome />} />
       </Route>
     </Route>
   )
