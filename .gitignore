@@ -6,14 +6,14 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
+uploads/
 node_modules
 dist
 dist-ssr
 *.local
 
 # Editor directories and files
-uploads
+
 .vscode/*
 !.vscode/extensions.json
 .idea
