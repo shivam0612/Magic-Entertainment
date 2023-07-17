@@ -25,6 +25,7 @@ import UploadVideoPage from "./screens/moviesandsongs/UploadVideoPage.jsx";
 import HomepageofMS from './screens/moviesandsongs/Home.jsx'
 import MuseumHome from './screens/virtualmuseum/MuseumHome.jsx';
 import SHome from './screens/subscription/SHome.jsx';
+import SubscriptionHomePage from './screens/subscription/Home.jsx';
 
 
 const router = createBrowserRouter(
@@ -46,6 +47,7 @@ const router = createBrowserRouter(
         <Route path='/video/upload' element={<UploadVideoPage />} />
         <Route path='/shome' element={<SHome />} />
         <Route path='/museumhome' element={< MuseumHome />} />
+        <Route path='/submainhome' element={< SubscriptionHomePage />} />
       </Route>
     </Route>
   )

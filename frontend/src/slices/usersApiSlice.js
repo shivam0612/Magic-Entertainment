@@ -30,6 +30,19 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    addSubscription: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/subscription`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    getSubscriptionDetails: builder.query({
+      query: () => ({
+        url: `${VIDEO_URL}/getsubscription`,
+        method: 'GET'
+      }),
+    }),
 
   }),
 });
@@ -39,4 +52,6 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useUpdateUserMutation,
+  useAddSubscriptionMutation,
+  useGetSubscriptionDetailsQuery
 } = userApiSlice;

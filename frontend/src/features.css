@@ -78,6 +78,7 @@
   border-radius: 5px;
   margin-top: 20px;
 }
+
 /* Online virtual Museum */
 .museum-card {
   display: flex;
@@ -124,6 +125,7 @@
   0% {
     box-shadow: 0 0 10px rgba(51, 173, 230, 0.5);
   }
+
   100% {
     box-shadow: 0 0 10px rgba(202, 229, 241, 0.5), 0 0 20px rgba(149, 218, 248, 0.912), 0 0 30px rgba(108, 229, 141, 0.863);
   }
@@ -154,24 +156,123 @@
 /* Subscription Page */
 .subscription-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+}
+.Sub-title{
+  font-size: 2rem;
+  color: #444;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 .subscription-card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid rgb(146, 146, 16);
+  border-radius: 25px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  text-align: center;
+  padding: 30px;
+  height: 60vh;
+}
+
+.subscription-card:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease-in-out;
 }
 
 .subscription-card.selected {
   background-color: #a5d6a7;
+
   /* Green background color for the selected card */
 }
 
 .inner-card {
+  border: 1px solid #b2adad;
+  border-radius: 20px;
+  margin-top: 10px;
+  text-align: left;
+  padding: 20px;
+  height: 55%;
+}
+
+.select-button {
+  text-align: center;
+}
+.select-button button{
+  border: none;
+  border-radius: 4px;
+  margin-top: 1rem;
+  background-color: #e0f2f1 ;
+  text-transform: uppercase;
+  padding: 10px 60px;
+  font-weight: 500;
+  box-shadow: 0 1px 2px #0d6efd;
+  letter-spacing: 2px;
+}
+
+/* Subscription MainPage */
+
+.subscriptions-container {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.subscriptions-title {
+  font-size: 2rem;
+  color: #444;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.subscriptions-card {
+  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-top: 10px;
-  padding: 10px;
+  padding: 1.5rem;
+  
+}
+
+.subscriptions-card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 1remd;
+  margin-bottom: 1rem;
+}
+
+.subscriptions-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.subscriptions-detail {
+  margin-bottom: 0.5rem;
+}
+
+.subscriptions-actions {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.subscriptions-button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.subscriptions-button-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.subscriptions-button-danger {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
 }

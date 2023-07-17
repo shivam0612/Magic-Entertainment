@@ -1,23 +1,26 @@
 import mongoose from "mongoose";
 
-const subscriptionSchema = new mongoose.Schema(
+const subscriptionSchema = mongoose.Schema(
   {
-    user: {
+    userid: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
     },
     startDate: {
       type: Date,
-      required: true
+      required: true,
+
     },
     endDate: {
       type: Date,
-      required: true
+      required: true,
+
     },
     active: {
       type: Boolean,
-      default: true
+      required: true,
+      default: false
+
     }
   },
   { timestamps: true }

@@ -5,6 +5,8 @@ import {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  addSubscription,
+  getSubscription
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { sendContactEmail } from '../controllers/userController.js';
@@ -26,6 +28,8 @@ router
 // @route   POST /api/users/contact
 // @access  Public
 router.post('/contact', sendContactEmail);
+router.post('/subscription', addSubscription);
+router.get('/getsubscription', getSubscription) 
 
 
 export default router;

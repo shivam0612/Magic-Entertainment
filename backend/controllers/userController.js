@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import nodemailer from 'nodemailer';
+import Subscription from '../models/subscriptionModel.js';
 
 
 // @desc    Auth user & get token
@@ -161,6 +162,47 @@ const sendContactEmail = asyncHandler(async (req, res) => {
 
 });
 
+
+const addSubscription = asyncHandler(async (req, res) => {
+  const { userid, startDate, endDate, active } = req.body;
+
+  // checking the existing subscription for user
+  const existingSubscription = await Subscription.findOne({ userid });
+  if (existingSubscription) {
+    // Update the existing subscription
+    existingSubscription.startDate = startDate;
+    existingSubscription.endDate = endDate;
+    existingSubscription.active = active;
+
+    const updatedSubscription = await existingSubscription.save();
+
+    res.status(200).json(updatedSubscription);
+  } else {
+    // Create a new subscription
+    const newSubscription = await Subscription.create({
+      userid,
+      startDate,
+      endDate,
+      active,
+    });
+    res.status(201).json(newSubscription);
+  }
+});
+
+const getSubscription = asyncHandler(async (req, res) => {
+  try {
+
+    const {userid} = req.body;
+    const videos = await Subscription.find(userid);
+    // console.log(videos)
+    return res.status(200).json({ success: true, videos });
+  } catch (err) {
+    console.log(err)
+    return res.status(400).send(err);
+  }
+})
+
+
 export {
   authUser,
   registerUser,
@@ -168,4 +210,6 @@ export {
   getUserProfile,
   updateUserProfile,
   sendContactEmail,
+  addSubscription,
+  getSubscription
 };
