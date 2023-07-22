@@ -4,6 +4,21 @@ import generateToken from '../utils/generateToken.js';
 import nodemailer from 'nodemailer';
 import Subscription from '../models/subscriptionModel.js';
 import axios from 'axios'
+import redis from "redis"
+
+const redisclient = redis.createClient({ // Corrected variable name to redisclient
+  host: '127.0.0.1',
+  port: 6379,
+});
+redisclient.connect()
+redisclient.on('connect', () => {
+  console.log('Connected to Redis server');
+});
+
+redisclient.on('error', (err) => {
+  console.error('Redis Error:', err);
+});
+
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
@@ -241,25 +256,35 @@ const deleteSubscription = asyncHandler(async (req, res) => {
 
 const getartwork = asyncHandler(async (req, res) => {
   try {
-    const apiKey = '1XhjQJNH';
-    const apiUrl = 'https://www.rijksmuseum.nl/api/en/collection';
+    const cachedData = await redisclient.get('artworks'); // Use a unique key (e.g., 'artworks') for the Redis cache
 
-    const response = await axios.get(apiUrl, {
-      params: {
-        key: apiKey,
-        format: 'json',
-        imgonly: true,
-        ps: 500000,
-      },
-    });
+    if (cachedData) {
+      const responseDataRedis = JSON.parse(cachedData); // Parse the cached data back to an array of objects
+      res.json(responseDataRedis );
+    } else {
+      const apiKey = '1XhjQJNH';
+      const apiUrl = 'https://www.rijksmuseum.nl/api/en/collection';
 
-    const responseData = response.data.artObjects || [];
-    res.json(responseData);
+      const response = await axios.get(apiUrl, {
+        params: {
+          key: apiKey,
+          format: 'json',
+          imgonly: true,
+          ps: 500000,
+        },
+      });
+
+      const responseData = response.data.artObjects || [];
+      await redisclient.set('artworks', JSON.stringify(responseData)); // Store the data in the Redis cache with the key 'artworks'
+
+      res.json(responseData);
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while fetching data.' });
+    res.status(500).json({ error: 'An error occurred while fetching data.', apiError: error.message });
   }
 });
+
 
 export {
   authUser,
