@@ -12,19 +12,12 @@ const MuseumHome = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const apiKey = '1XhjQJNH';
-        const apiUrl = 'https://www.rijksmuseum.nl/api/en/collection';
+        const response = await fetch('http://localhost:5000/api/users/getartworks');
+        if (!response.ok) {
+          throw new Error('An error occurred while fetching data.');
+        }
 
-        const response = await axios.get(apiUrl, {
-          params: {
-            key: apiKey,
-            format: 'json',
-            imgonly: true,
-            ps: 500000,
-          },
-        });
-
-        const responseData = response.data.artObjects || [];
+        const responseData = await response.json();
         setArtworks(responseData);
         setLoading(false);
       } catch (error) {
@@ -36,6 +29,7 @@ const MuseumHome = () => {
 
     fetchData();
   }, []);
+
 
   const handleCardClick = (artwork) => {
     fetchAdditionalInfo(artwork.title, artwork.principalOrFirstMaker)
@@ -69,6 +63,8 @@ const MuseumHome = () => {
       });
 
       const responseData = response.data;
+      console.log(response.data); // Log the response data
+
       const items = responseData.items || [];
       const additionalDetails = items.length > 0 ? items[0].snippet : 'No additional details available.';
 

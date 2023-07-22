@@ -3,7 +3,7 @@ import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import nodemailer from 'nodemailer';
 import Subscription from '../models/subscriptionModel.js';
-
+import axios from 'axios'
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
@@ -214,7 +214,7 @@ const getSubscription = asyncHandler(async (req, res) => {
     if (!data) {
       return res.status(404).json({ error: 'Subscription not found' });
     }
-     res.json(data);
+    res.json(data);
 
 
   } catch (err) {
@@ -239,7 +239,27 @@ const deleteSubscription = asyncHandler(async (req, res) => {
   }
 });
 
+const getartwork = asyncHandler(async (req, res) => {
+  try {
+    const apiKey = '1XhjQJNH';
+    const apiUrl = 'https://www.rijksmuseum.nl/api/en/collection';
 
+    const response = await axios.get(apiUrl, {
+      params: {
+        key: apiKey,
+        format: 'json',
+        imgonly: true,
+        ps: 500000,
+      },
+    });
+
+    const responseData = response.data.artObjects || [];
+    res.json(responseData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching data.' });
+  }
+});
 
 export {
   authUser,
@@ -250,5 +270,6 @@ export {
   sendContactEmail,
   addSubscription,
   getSubscription,
-  deleteSubscription
+  deleteSubscription,
+  getartwork
 };

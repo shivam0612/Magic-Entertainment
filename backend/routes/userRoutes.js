@@ -5,6 +5,7 @@ import {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  getartwork,
   addSubscription,
   getSubscription,
   deleteSubscription
@@ -30,8 +31,8 @@ router
 // @access  Public
 router.post('/contact', sendContactEmail);
 router.post('/addsubscription', addSubscription);
-router.get('/getsubscription/:userid', getSubscription) 
+router.get('/getsubscription/:userid', getSubscription)
 router.delete('/deletesubscription/:userid', deleteSubscription);
-
+router.get('/getartworks', getartwork)
 
 export default router;
