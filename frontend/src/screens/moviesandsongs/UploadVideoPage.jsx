@@ -168,7 +168,7 @@ const UploadVideoPage = () => {
         <Title level={2} style={{ color: 'black' }}>Upload Video</Title>
       </div>
 
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit} className='shadow p-5'>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Dropzone
             onDrop={onDrop}
@@ -215,7 +215,7 @@ const UploadVideoPage = () => {
         <br /><br />
 
         <label style={{ color: 'rgb(179, 179, 179)' }}>Privacy Level</label><br />
-        <select onChange={handleChangePrivacy}>
+        <select style={{ position: 'center', top: '100%', left: '0', backgroundColor: 'white', borderRadius: '4px', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', padding: '10px' }} onChange={handleChangePrivacy}>
           {Private.map((item, index) => (
             <option key={index} value={item.value}>{item.label}</option>
           ))}
@@ -223,7 +223,7 @@ const UploadVideoPage = () => {
         <br /><br />
 
         <label style={{ color: 'rgb(179, 179, 179)' }}>Category</label><br />
-        <select onChange={handleChangeCategories}>
+        <select style={{ position: 'center', top: '100%', left: '0', backgroundColor: 'white', borderRadius: '4px', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', padding: '10px' }} onChange={handleChangeCategories}>
           {Category.map((item, index) => (
             <option key={index} value={item.label}>{item.label}</option>
           ))}

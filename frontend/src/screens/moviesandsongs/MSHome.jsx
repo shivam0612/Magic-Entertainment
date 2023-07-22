@@ -38,7 +38,7 @@ const MSHome = () => {
       );
 
       setVideos(response.data.items);
-      setSelectedVideo(null); // Reset selected video when performing a new search
+      setSelectedVideo(null); 
     } catch (error) {
       console.log(error);
     }
@@ -62,15 +62,14 @@ const MSHome = () => {
     return videos.map((video) => (
       <div
         key={video.id.videoId}
-        className="card mb-3 p-2 shadow"
-        style={{ width: '80%', margin: 'auto' }}
+        className="card-mshome card mb-3 p-2 shadow"
       >
         <div className="row no-gutters">
           <div className="col-md-4">
             <div className="position-relative">
               <img
                 src={video.snippet.thumbnails.medium.url}
-                className="card-img"
+                className="card-img-mshome"
                 alt={video.snippet.title}
                 onClick={() => openVideo(video.id.videoId)}
               />
@@ -163,6 +162,7 @@ const MSHome = () => {
                   alt="GIF"
                   width="560"
                   height="315"
+                  className='player shadow'
                 />
               </div>
             )
@@ -170,19 +170,19 @@ const MSHome = () => {
 
             selectedVideo && (
 
-              <div>
-                <video width="560" height="315" controls>
+              <div className=''>
+                <video className='player' width="560" height="315" controls>
                   <source src={selectedVideo} type="video/mp4" />
                 </video>
               </div>
             )
           )}
 
-          <div>
-            <button className="mt-5" onClick={() => setSelectedVideo(null)}>
+          <div style={{width:'560px',  justifyContent:'space-evenly',  display: 'flex',flexWrap: 'wrap'}}>
+            <button className='closevideo-btn' onClick={() => setSelectedVideo(null)}>
               Close Video
             </button>
-            <button className="mt-5" onClick={handleAddVideos}>
+            <button className="addvideo-btn" onClick={handleAddVideos}>
               Add Videos
             </button>
           </div>
@@ -191,34 +191,48 @@ const MSHome = () => {
           {activeSection === 'online' ? (
             <div>
               <div>
-                <button style={{ marginBottom: '10px' }} onClick={handleOnlineVideosClick}>
+                <button className='onlinevideo-btn'  onClick={handleOnlineVideosClick}>
                   Online Videos
                 </button>
-                <button onClick={handleMeVideosClick}>ME Videos</button>
+                <button className='mevideo-btn' onClick={handleMeVideosClick}>ME Videos</button>
               </div>
-              <h2>Search Videos Online</h2>
+              <h2 className='sidebar-feature-title'>Search Videos Online</h2>
               <div className="mt-3 mb-4">
-                <input
+                <input className='input-sft'
                   type="text"
                   placeholder="Search videos..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button onClick={handleSearch}>Search</button>
+                <button style={{
+                  display: 'inline-block',
+                  padding: '10px 20px',
+                  marginLeft: '20px',
+                  backgroundColor: '#ADD8E6',
+                  color: 'white',
+                  fontFamily: 'sans-serif',
+                  fontStyle: 'bold',
+                  textDecoration: 'none',
+                  borderRadius: '4px',
+                  transition: 'background-color 0.3s ease',
+                  marginTop:'1rem'
+                  
+                }} onClick={handleSearch}>Search</button>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0%' }}>{renderVideos()}</div>
             </div>
           ) : (
             <div>
               <div>
-                <button style={{ marginBottom: '10px' }} onClick={handleOnlineVideosClick}>
+                <button className='onlinevideo-btn' onClick={handleOnlineVideosClick}>
                   Online Videos
                 </button>
-                <button onClick={handleMeVideosClick}>ME Videos</button>
+                <button onClick={handleMeVideosClick} className='mevideo-btn'>ME Videos</button>
               </div>
-              <h2>ME Videos</h2>
+              <h2 className='sidebar-feature-title'>ME Videos</h2>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0%' }}>
+
                 {renderVideosFromDatabase()}
               </div>
             </div>

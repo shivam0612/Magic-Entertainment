@@ -162,45 +162,83 @@ const sendContactEmail = asyncHandler(async (req, res) => {
 
 });
 
-
 const addSubscription = asyncHandler(async (req, res) => {
   const { userid, startDate, endDate, active } = req.body;
 
-  // checking the existing subscription for user
-  const existingSubscription = await Subscription.findOne({ userid });
-  if (existingSubscription) {
-    // Update the existing subscription
-    existingSubscription.startDate = startDate;
-    existingSubscription.endDate = endDate;
-    existingSubscription.active = active;
+  try {
+    let existingSubscription = await Subscription.findOne({ userid });
 
-    const updatedSubscription = await existingSubscription.save();
+    if (existingSubscription) {
+      // Check if the endDate from req.body is provided and valid
+      if (endDate && new Date(endDate) > new Date()) {
+        const existingEndDate = new Date(existingSubscription.endDate);
+        const endDateToAdd = new Date(endDate);
 
-    res.status(200).json(updatedSubscription);
-  } else {
-    // Create a new subscription
-    const newSubscription = await Subscription.create({
-      userid,
-      startDate,
-      endDate,
-      active,
-    });
-    res.status(201).json(newSubscription);
+        // Calculate the time difference in milliseconds
+        const timeDifference = endDateToAdd - new Date();
+
+        // Add the time difference to the existing endDate
+        existingEndDate.setTime(existingEndDate.getTime() + timeDifference);
+        existingSubscription.endDate = existingEndDate;
+      }
+
+      existingSubscription.active = active;
+
+      const updatedSubscription = await existingSubscription.save();
+      res.status(200).json(updatedSubscription);
+    } else {
+      // Create a new subscription
+      if (!userid || !startDate || !active) {
+        return res.status(400).json({ error: 'userid, startDate, and active are required fields' });
+      }
+
+      const newSubscription = await Subscription.create({
+        userid,
+        startDate,
+        endDate: endDate ? new Date(endDate) : null, // Convert endDate to Date if provided
+        active,
+      });
+      res.status(201).json(newSubscription);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
 const getSubscription = asyncHandler(async (req, res) => {
-  try {
+  const userId = req.params.userid;
 
-    const {userid} = req.body;
-    const videos = await Subscription.find(userid);
-    // console.log(videos)
-    return res.status(200).json({ success: true, videos });
+  try {
+    const data = await Subscription.findOne({ userid: userId });
+    if (!data) {
+      return res.status(404).json({ error: 'Subscription not found' });
+    }
+     res.json(data);
+
+
   } catch (err) {
-    console.log(err)
-    return res.status(400).send(err);
+    res.status(500).json({ error: 'Error fetching data from the database' });
   }
-})
+});
+
+
+const deleteSubscription = asyncHandler(async (req, res) => {
+  const userId = req.params.userid;
+
+  try {
+    const deletedSubscription = await Subscription.deleteOne({ userid: userId });
+
+    if (deletedSubscription.deletedCount === 0) {
+      return res.status(404).json({ message: 'Subscription not found' });
+    }
+
+    res.json({ message: 'Subscription deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Error deleting subscription' });
+  }
+});
+
 
 
 export {
@@ -211,5 +249,6 @@ export {
   updateUserProfile,
   sendContactEmail,
   addSubscription,
-  getSubscription
+  getSubscription,
+  deleteSubscription
 };

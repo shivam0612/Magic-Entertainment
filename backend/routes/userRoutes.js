@@ -6,7 +6,8 @@ import {
   getUserProfile,
   updateUserProfile,
   addSubscription,
-  getSubscription
+  getSubscription,
+  deleteSubscription
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { sendContactEmail } from '../controllers/userController.js';
@@ -28,8 +29,9 @@ router
 // @route   POST /api/users/contact
 // @access  Public
 router.post('/contact', sendContactEmail);
-router.post('/subscription', addSubscription);
-router.get('/getsubscription', getSubscription) 
+router.post('/addsubscription', addSubscription);
+router.get('/getsubscription/:userid', getSubscription) 
+router.delete('/deletesubscription/:userid', deleteSubscription);
 
 
 export default router;

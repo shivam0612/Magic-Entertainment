@@ -7,12 +7,11 @@ import { setCredentials } from '../../slices/authSlice.js';
 
 const SHome = () => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.auth);
   const [addSubscription, { loading, error }] = useAddSubscriptionMutation();
   const dispatch = useDispatch();
-// console.log(userInfo)
-console.log(userInfo)
+
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
   };
@@ -20,76 +19,68 @@ console.log(userInfo)
   const AddSubscription = async (e) => {
     e.preventDefault();
 
-    if (selectedOption === '7days') {
-      // Subscribe for 7 days
-    } else if (selectedOption === '3months') {
-      // Subscribe for 3 months
-    } else if (selectedOption === 'lifetime') {
-      // Subscribe for a lifetime (no expiry)
+    if (!selectedOption) {
+      toast.error('Please select a subscription option.', { autoClose: 3000 });
+      return;
     }
 
-    if (userInfo && selectedOption) {
-      const subscriptionData = {
-        userid: userInfo._id,
-        startDate: new Date(),
-        endDate: null,
-        active: true,
-      };
-    
-      if (userInfo.endDate && new Date(userInfo.endDate) > new Date()) {
-        const existingEndDate = new Date(userInfo.endDate);
-    
-        if (selectedOption === '7days') {
-          existingEndDate.setDate(existingEndDate.getDate() + 7);
-        } else if (selectedOption === '3months') {
-          existingEndDate.setMonth(existingEndDate.getMonth() + 3);
-        }
-    
-        subscriptionData.endDate = existingEndDate;
-      } else {
-        subscriptionData.endDate = calculateEndDate(selectedOption);
-      }
-      
-      const data = {
-        _id: userInfo._id,
-        preference: userInfo.preference,
-        phone: userInfo.phone,
-        email: userInfo.email,
-        name: userInfo.name,
-        active: subscriptionData.active,
-        endDate: subscriptionData.endDate.toISOString(),
-      };
-      dispatch(setCredentials(data));
+    const subscriptionData = {
+      userid: userInfo._id,
+      startDate: new Date(),
+      endDate: null, // Initialize it as null
+      active: true,
+    };
 
-      try {
-        const res = await addSubscription(subscriptionData);
-        toast.success('You Are Now Suscribed');
-        navigate('/submainhome')
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
+    if (selectedOption === '7days') {
+      subscriptionData.endDate = calculateEndDate("7days");
+    } else if (selectedOption === '3months') {
+      subscriptionData.endDate = calculateEndDate("3months");
+    } else if (selectedOption === 'lifetime') {
+      subscriptionData.endDate = calculateEndDate("lifetime");;
+    }
+
+    const data = {
+      _id: userInfo._id,
+      preference: userInfo.preference,
+      phone: userInfo.phone,
+      email: userInfo.email,
+      name: userInfo.name,
+      active: subscriptionData.active,
+      endDate: subscriptionData.endDate === 'lifetime' ? 'lifetime' : subscriptionData.endDate.toISOString(),
+    };
+    dispatch(setCredentials(data));
+
+    try {
+      const res = await addSubscription(subscriptionData);
+      toast.success('You Are Now Subscribed');
+      navigate('/submainhome');
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
     }
   };
 
   const calculateEndDate = (option) => {
-    // Calculate and return the end date based on the selected option
-    // You can implement your own logic here based on your subscription durations
-
-    // Example:
     const currentDate = new Date();
+  
     if (option === '7days') {
-      currentDate.setDate(currentDate.getDate() + 7);
+      const endDate = new Date(currentDate);
+      endDate.setDate(currentDate.getDate() + 7);
+      return endDate;
     } else if (option === '3months') {
-      currentDate.setMonth(currentDate.getMonth() + 3);
+      const endDate = new Date(currentDate);
+      endDate.setMonth(currentDate.getMonth() + 3);
+      return endDate;
     } else if (option === 'lifetime') {
-      currentDate.setFullYear(currentDate.getFullYear() + 100); // Set a long duration for lifetime subscription
+      // Set a long duration for lifetime subscription (e.g., 100 years from now)
+      const endDate = new Date(currentDate);
+      endDate.setFullYear(currentDate.getFullYear() + 100);
+      return endDate;
     }
-    return currentDate;
+  
+    return currentDate; // Default: Return the current date if no option is selected
   };
-
-
-  return (
-    <div className='body-tag vh-100'>
+    return (
+    <div className='body-tag shome'>
       <h1 className='Sub-title pt-5'>Subscription Page</h1>
 
       <div className="subscription-container">
@@ -154,7 +145,7 @@ console.log(userInfo)
       </div>
 
       {selectedOption && (
-        <div>
+        <div className='selected-option select-button'>
           <h3>Selected Option: {selectedOption}</h3>
           <button onClick={AddSubscription}>Subscribe</button>
         </div>
