@@ -26,7 +26,7 @@ import HomepageofMS from './screens/moviesandsongs/Home.jsx'
 import MuseumHome from './screens/virtualmuseum/MuseumHome.jsx';
 import SHome from './screens/subscription/SHome.jsx';
 import SubscriptionHomePage from './screens/subscription/Home.jsx';
-
+import MuseumHomeMain from './screens/virtualmuseum/home.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +48,7 @@ const router = createBrowserRouter(
         <Route path='/shome' element={<SHome />} />
         <Route path='/museumhome' element={< MuseumHome />} />
         <Route path='/submainhome' element={< SubscriptionHomePage />} />
+        <Route path='/mhome' element={<MuseumHomeMain/>} />
       </Route>
     </Route>
   )
