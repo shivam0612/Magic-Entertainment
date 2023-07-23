@@ -112,10 +112,11 @@
   transition: border-color 0.3s ease;
 }
 
-.player { 
+.player {
   border-radius: 10px;
   box-shadow: 0 2px 4px #eee;
 }
+
 /* Slider Buttons */
 .slider-buttons {
   position: absolute;
@@ -320,9 +321,10 @@
 
 /* Subscription MainPage */
 
-.shome{
+.shome {
   height: 110vh !important;
 }
+
 .subscriptions-container {
   margin-top: 3rem;
   display: flex;
@@ -385,19 +387,177 @@
   color: #fff;
   border: none;
 }
-.selected-option{
+
+.selected-option {
   display: flex;
 
-flex-wrap: nowrap;  flex-direction: column;
+  flex-wrap: nowrap;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   /* height: 100vh;  */
   margin-top: 2rem;
 }
 
-.selected-option button{
+.selected-option button {
   margin-top: 1rem;
-  box-shadow: 0 1px 2px #dc3545; 
+  box-shadow: 0 1px 2px #dc3545;
   background-color: #fff;
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* game home page */
+/* GameHome.css */
+.gamehometitle {
+  font-size: 2rem;
+  color: #444;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.gametitle {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #111010;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.game-home-container {
+  display: flex;
+  justify-content: center;
+}
+
+.game-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(24vw, 1fr));
+  /* 3 cards per row, evenly justified */
+  grid-gap: 20px;
+  max-width: 80vw;
+  /* Set a max-width if you want to limit the cards container width */
+  padding: 20px;
+}
+
+.game-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Add box-shadow for the card */
+  padding: 20px;
+  text-align: center;
+}
+
+.game-image {
+  width: 100%;
+  max-height: 200px;
+  /* Adjust the max-height of the image as needed */
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.game-name {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.game-description {
+  font-size: 14px;
+}
+
+
+
+/* ttt game.css */
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 2rem;
+}
+
+.game-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.board-row {
+  display: flex;
+}
+
+.square {
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  cursor: pointer;
+}
+
+.game-info {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* snake game */
+.snaketitle {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #111010;
+  /* margin-bottom: 2rem !important; */
+  top: 8rem;
+  position: absolute;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.snakebody {
+  height: calc(100vh - 82px);
+}
+.snakegamebutton{
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 0.3rem;
+}
+.canvasdiv{
+  margin-top: 4rem;
+}
+
+.canvasdiv canvas{
+  margin-top: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border: 0.7rem #b2adad solid;
+  border-radius: 10px;
+  background-color: #eee;
 }

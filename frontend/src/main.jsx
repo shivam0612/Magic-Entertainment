@@ -27,6 +27,9 @@ import MuseumHome from './screens/virtualmuseum/MuseumHome.jsx';
 import SHome from './screens/subscription/SHome.jsx';
 import SubscriptionHomePage from './screens/subscription/Home.jsx';
 import MuseumHomeMain from './screens/virtualmuseum/home.jsx';
+import GameHome from './screens/games/GameHome.jsx'
+import TTTGAME from './screens/games/TicTacToeGame.jsx'
+import SnakeGame from './screens/games/snakegame/SnakeGame.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -49,6 +52,10 @@ const router = createBrowserRouter(
         <Route path='/museumhome' element={< MuseumHome />} />
         <Route path='/submainhome' element={< SubscriptionHomePage />} />
         <Route path='/mhome' element={<MuseumHomeMain/>} />
+        <Route path='/gamehome' element={<GameHome/>} />
+        <Route path='/snakegame' element={<SnakeGame/>} />
+        <Route path='/tttgame' element={<TTTGAME/>} />
+
       </Route>
     </Route>
   )
