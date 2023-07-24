@@ -7,8 +7,9 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import './app.css';
-import './features.css';
+import './css/app.css';
+import './css/features.css';
+import './css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import store from './store';
 import { Provider } from 'react-redux';
@@ -30,6 +31,9 @@ import MuseumHomeMain from './screens/virtualmuseum/home.jsx';
 import GameHome from './screens/games/GameHome.jsx'
 import TTTGAME from './screens/games/TicTacToeGame.jsx'
 import SnakeGame from './screens/games/snakegame/SnakeGame.jsx';
+import PuzzleGame from './screens/games/PuzzleGame.jsx'
+import MEUsers from './screens/admin_screens/MEUsers.jsx';
+import MEVideos from './screens/admin_screens/MEVideos.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -51,12 +55,15 @@ const router = createBrowserRouter(
         <Route path='/shome' element={<SHome />} />
         <Route path='/museumhome' element={< MuseumHome />} />
         <Route path='/submainhome' element={< SubscriptionHomePage />} />
-        <Route path='/mhome' element={<MuseumHomeMain/>} />
-        <Route path='/gamehome' element={<GameHome/>} />
-        <Route path='/snakegame' element={<SnakeGame/>} />
-        <Route path='/tttgame' element={<TTTGAME/>} />
-
+        <Route path='/mhome' element={<MuseumHomeMain />} />
+        <Route path='/gamehome' element={<GameHome />} />
+        <Route path='/snakegame' element={<SnakeGame />} />
+        <Route path='/tttgame' element={<TTTGAME />} />
+        <Route path='/puzzlegame' element={<PuzzleGame />} />
+        <Route path='/meusers' element={< MEUsers />} />
+        <Route path='/mevideos' element={<MEVideos />} />
       </Route>
+
     </Route>
   )
 );

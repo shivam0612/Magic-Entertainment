@@ -8,7 +8,9 @@ import {
   getartwork,
   addSubscription,
   getSubscription,
-  deleteSubscription
+  deleteSubscription,
+  getUsers,
+  deleteUser
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { sendContactEmail } from '../controllers/userController.js';
@@ -24,15 +26,12 @@ router
   .route('/profile')
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
-
-
-// @desc    Send contact form email
-// @route   POST /api/users/contact
-// @access  Public
 router.post('/contact', sendContactEmail);
 router.post('/addsubscription', addSubscription);
 router.get('/getsubscription/:userid', getSubscription)
 router.delete('/deletesubscription/:userid', deleteSubscription);
 router.get('/getartworks', getartwork)
+router.get('/getusers', getUsers)
+router.delete('/deleteuser/:userid', deleteUser)
 
 export default router;

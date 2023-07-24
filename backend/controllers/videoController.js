@@ -96,7 +96,18 @@ const getVideos = asyncHandler(async (req, res) => {
     }
 });
 
+const getVideosToAdmin = asyncHandler(async (req, res) => {
+    try {
+        const videos = await Video.find();
+        // console.log(videos)
+        return res.status(200).json({ success: true, videos });
+    } catch (err) {
+        console.log(err)
+        return res.status(400).send(err);
+    }
+});
+
 
 export {
-    uploadFiles, tumbnailsOfVideo, UploadVideo, getVideos
+    uploadFiles, tumbnailsOfVideo, UploadVideo, getVideos, getVideosToAdmin
 }

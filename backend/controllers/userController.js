@@ -109,6 +109,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // @access  Private
@@ -223,7 +224,7 @@ const addSubscription = asyncHandler(async (req, res) => {
 
 const getSubscription = asyncHandler(async (req, res) => {
   const userId = req.params.userid;
-
+  
   try {
     const data = await Subscription.findOne({ userid: userId });
     if (!data) {
@@ -285,6 +286,37 @@ const getartwork = asyncHandler(async (req, res) => {
   }
 });
 
+const getUsers = asyncHandler(async (req,res) => {
+  try {
+    const excludedUserId = "64be7487c7e3c685cd39cb1d"; // The user ID to exclude
+    const data = await User.find({ _id: { $ne: excludedUserId } });
+
+    if (!data) {
+      return res.status(404).json({ error: 'No Users not found' });
+    }
+    res.json(data);
+
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching data from the database' });
+  }
+})
+
+const deleteUser = asyncHandler(async (req, res) => {
+  const userId = req.params.userid;
+
+  try {
+    const deleteUserResult = await User.deleteOne({ _id: userId });
+
+    if (deleteUserResult.deletedCount === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ message: 'User deleted successfully' });
+  } catch (err) {
+    // console.error(err);
+    res.status(500).json({ error: 'Error deleting user' });
+  }
+});
 
 export {
   authUser,
@@ -296,5 +328,7 @@ export {
   addSubscription,
   getSubscription,
   deleteSubscription,
-  getartwork
+  getartwork,
+  getUsers,
+  deleteUser
 };

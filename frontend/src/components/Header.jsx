@@ -2,9 +2,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
-import logo from '../images/logo2.gif'
-import logo2 from '../images/logo1.gif'
-
+import logo from '../images/logo2.gif';
+import logo2 from '../images/logo1.gif';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -23,12 +22,15 @@ const Header = () => {
     }
   };
 
+  // Check if the user is an admin
+  const isAdmin = userInfo && userInfo._id === '64be7487c7e3c685cd39cb1d';
+
   return (
-    <nav className="navbar shadow navbar-expand-lg bg-body-tertiary" >
-      <div className="container-fluid" style={{backgroundColor:"#e0f2f1"}}>
+    <nav className="navbar shadow navbar-expand-lg bg-body-tertiary">
+      <div className="container-fluid" style={{ backgroundColor: '#e0f2f1' }}>
         <NavLink className="navbar-brand" to="/">
           <div className="logo-container">
-            <img src={logo2}  alt="logo" />
+            <img src={logo2} alt="logo" />
             <img src={logo} alt="logo" />
           </div>
         </NavLink>
@@ -54,32 +56,62 @@ const Header = () => {
                 </li>
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/service">
-                    Service
+                    Services
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/contact">
-                    Contact
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/submainhome">
-                    Subscription
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" style={{color:"#27ae60"}} to="/profile">
-                    {userInfo.name}
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link btn btn-link" onClick={logoutHandler}>
-                    Logout
-                  </NavLink>
-                </li>
-              </>
+                {isAdmin ? (
+                  // Render this if the user is an admin
+                  <>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/meusers">
+                        MEUsers
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/mevideos">
+                        MEVideos
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" style={{ color: '#27ae60' }} to="/profile">
+                        {userInfo.name}
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className="nav-link btn btn-link" onClick={logoutHandler}>
+                        Logout
+                      </NavLink>
+                    </li>
+                  </>
+                ) : (
+                  // Render this if the user is not an admin
+                  <>
 
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/contact">
+                        Contact
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/submainhome">
+                        Subscription
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" style={{ color: '#27ae60' }} to="/profile">
+                        {userInfo.name}
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className="nav-link btn btn-link" onClick={logoutHandler}>
+                        Logout
+                      </NavLink>
+                    </li>
+                  </>
+                )}
+              </>
             ) : (
+              // Render this if the user is not logged in
               <>
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/">
@@ -97,7 +129,7 @@ const Header = () => {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/profile">
+                  <NavLink className="nav-link" style={{ color: '#27ae60' }} to="/profile">
                     Profile
                   </NavLink>
                 </li>

@@ -470,18 +470,29 @@
   width: 100%;
   max-height: 200px;
   /* Adjust the max-height of the image as needed */
-  object-fit: cover;
+  object-fit: fill;
+  box-shadow: 0px 1px 4px lightgray;
   border-radius: 10px;
 }
 
+.game-card:hover{
+  outline-offset: 0;
+  background-color: #e0f2f1;
+}
+.game-card img:hover{
+  border: 0.1rem solid black;
+  transform: scale(.95);
+}
+
 .game-name {
-  font-size: 20px;
+  font-size: 1.5rem;
   margin-top: 10px;
+  font-weight: bold;
   margin-bottom: 5px;
 }
 
 .game-description {
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 
@@ -542,7 +553,8 @@
 .snakebody {
   height: calc(100vh - 82px);
 }
-.snakegamebutton{
+
+.snakegamebutton {
   background-color: #333;
   color: #fff;
   text-decoration: none;
@@ -550,14 +562,62 @@
   margin-top: 20px;
   padding: 0.3rem;
 }
-.canvasdiv{
+
+.canvasdiv {
   margin-top: 4rem;
 }
 
-.canvasdiv canvas{
+.canvasdiv canvas {
   margin-top: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   border: 0.7rem #b2adad solid;
   border-radius: 10px;
   background-color: #eee;
+}
+
+
+/* puzzle game */
+.puzzle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.puzzle-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 5px;
+  background-color: #e0f2f1;
+  box-shadow: 1px 2px 4px #333;
+  border: 2px double black;padding: 5px;
+}
+
+.tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  border: 0.8px solid #34be4b;
+  cursor: pointer;
+}
+
+.empty {
+  background-color: #e0e0e0;
+}
+
+.puzzle-info {
+  margin-top: 20px;
+}
+
+.puzzle-info button {
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 0.4rem;
+  width: 5rem;
 }
