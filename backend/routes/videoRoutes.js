@@ -1,5 +1,5 @@
 import express from 'express';
-import { getVideos, tumbnailsOfVideo,getVideosToAdmin, uploadFiles, UploadVideo } from '../controllers/videoController.js'
+import { getVideos, tumbnailsOfVideo, getVideosToAdmin, uploadFiles, UploadVideo, deleteVideo } from '../controllers/videoController.js'
 const router = express.Router();
 
 //=================================
@@ -14,6 +14,7 @@ router.post('/uploadVideo', UploadVideo);
 
 router.get('/getVideo', getVideos);
 router.get('/getvideostoadmin', getVideosToAdmin)
+router.delete('/deletevideo/:videoid', deleteVideo)
 
 
 export default router

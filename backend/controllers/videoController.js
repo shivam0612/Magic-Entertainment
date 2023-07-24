@@ -107,7 +107,23 @@ const getVideosToAdmin = asyncHandler(async (req, res) => {
     }
 });
 
+const deleteVideo = asyncHandler(async (req, res) => {
+    const videoid = req.params.videoid;
+    console.log(videoid)
+    try {
+        const deletedVideo = await Video.deleteOne({ _id: videoid });
+
+        if (deletedVideo.deletedCount === 0) {
+            return res.status(404).json({ message: 'Video not found' });
+        }
+
+        res.json({ message: 'Video deleted successfully' });
+    } catch (err) {
+        // console.error(err);
+        res.status(500).json({ error: 'Error deleting user' });
+    }
+});
 
 export {
-    uploadFiles, tumbnailsOfVideo, UploadVideo, getVideos, getVideosToAdmin
+    uploadFiles, tumbnailsOfVideo, UploadVideo, getVideos, getVideosToAdmin, deleteVideo
 }

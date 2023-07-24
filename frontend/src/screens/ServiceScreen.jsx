@@ -51,7 +51,7 @@ const ServiceScreen = () => {
               alt=""
             />
             <h3>Others</h3>
-            <div className="desc">Watch Online</div>
+            <div className="desc">Other Features Coming Up Soon</div>
           </div>
         </div>
       </div>
