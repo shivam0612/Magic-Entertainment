@@ -38,7 +38,7 @@ const Slideshow = () => {
               objectFit: 'cover',
               objectPosition: 'center',
             }}
-            src="https://storage.googleapis.com/kaggle-datasets-images/2587299/4416293/715bb18a4917ad2d3e8b9bd678f31d10/dataset-cover.jpg?t=2022-10-29-03-36-49"
+            src="https://www.online-tech-tips.com/wp-content/uploads/2022/03/featured-image-2.jpg"
             alt="Second slide"
           />
         </div>
@@ -78,8 +78,10 @@ const Home = () => {
   };
 
   return (
-    <div >
-      <Slideshow />
+    <div className='body-tag' style={{height:"calc(100vh - 82px)"}}>
+      <div className='shadow'>
+        <Slideshow />
+      </div>
       <div className="centered-text mb-5">
         <h2>Welcome to Magic Entertainment!</h2>
         <p>We offer a wide range of movies and songs on our online platform.</p>

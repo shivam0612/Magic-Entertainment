@@ -12,6 +12,10 @@ const MSHome = () => {
   const navigate = useNavigate()
   const { data: videoss, isLoading, isError, refetch } = useGetVideosQuery();
 
+  const onlineVideoBtnClass = activeSection === 'online' ? 'active-button' : '';
+  const meVideoBtnClass = activeSection === 'me' ? 'active-button' : '';
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,11 +38,11 @@ const MSHome = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `https://www.googleapis.com/youtube/v3/search?key=AIzaSyCSHTFvOfMLUKXXQCZHsCVT6uyLZqf5Ykk&part=snippet&type=video&q=${searchQuery}`
+        `https://www.googleapis.com/youtube/v3/search?key=AIzaSyCSHTFvOfMLUKXXQCZHsCVT6uyLZqf5Ykk&part=snippet&type=video&q=${searchQuery}&maxResults=100`
       );
 
       setVideos(response.data.items);
-      setSelectedVideo(null); 
+      setSelectedVideo(null);
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +66,9 @@ const MSHome = () => {
     return videos.map((video) => (
       <div
         key={video.id.videoId}
-        className="card-mshome card mb-3 p-2 shadow"
+        className="card-mshome card p-2 mb-3 shadow"
+        style={{ height: "10rem" }}
+        onClick={() => openVideo(video.id.videoId)}
       >
         <div className="row no-gutters">
           <div className="col-md-4">
@@ -71,14 +77,14 @@ const MSHome = () => {
                 src={video.snippet.thumbnails.medium.url}
                 className="card-img-mshome"
                 alt={video.snippet.title}
-                onClick={() => openVideo(video.id.videoId)}
+                style={{ height: "9rem" }}
               />
             </div>
           </div>
           <div className="col-md-8">
             <div className="card-body">
-              <h5 className="card-title">{video.snippet.title}</h5>
-              <p className="card-text">{video.snippet.description}</p>
+              <h5 className="card-title" style={{ marginBottom: '8px', maxHeight: '3rem', overflow: 'hidden', textOverflow: 'ellipsis' }}>{video.snippet.title}</h5>
+              <p style={{ marginBottom: '8px', maxHeight: '3rem', overflow: 'hidden', textOverflow: 'ellipsis' }} className="card-text">{video.snippet.description}</p >
             </div>
           </div>
         </div>
@@ -104,6 +110,7 @@ const MSHome = () => {
         key={video._id}
         className="card mb-3 p-2 shadow"
         style={{ width: '80%', margin: 'auto' }}
+
       >
         <div className="row no-gutters">
           <div className="col-md-4">
@@ -119,8 +126,8 @@ const MSHome = () => {
           </div>
           <div className="col-md-8">
             <div className="card-body">
-              <h5 className="card-title">{video.title}</h5>
-              <p className="card-text">{video.description}</p>
+              <h5 className="card-title" style={{ marginBottom: '8px', maxHeight: '3rem', overflow: 'hidden', textOverflow: 'ellipsis' }}>{video.title}</h5>
+              <p className="card-text" style={{ overflow: "hidden" }}>{video.description}</p>
             </div>
           </div>
         </div>
@@ -147,8 +154,10 @@ const MSHome = () => {
             selectedVideo ? (
               <div>
                 <iframe
-                  width="560"
-                  height="315"
+                  width="600"
+                  height="400"
+                  style={{ borderRadius: "5px", shadow: "1px 2px 4px black" }}
+                  className='shadow'
                   src={`https://www.youtube.com/embed/${selectedVideo}`}
                   title="YouTube video player"
                   frameBorder="0"
@@ -160,8 +169,9 @@ const MSHome = () => {
                 <img
                   src="https://media.giphy.com/media/ITRemFlr5tS39AzQUL/giphy.gif"
                   alt="GIF"
-                  width="560"
-                  height="315"
+                  width="600"
+                  height="400"
+                  style={{ borderRadius: "5px", shadow: "1px 2px 4px black" }}
                   className='player shadow'
                 />
               </div>
@@ -178,7 +188,7 @@ const MSHome = () => {
             )
           )}
 
-          <div style={{width:'560px',  justifyContent:'space-evenly',  display: 'flex',flexWrap: 'wrap'}}>
+          <div style={{ width: '560px', justifyContent: 'space-evenly', display: 'flex', flexWrap: 'wrap' }}>
             <button className='closevideo-btn' onClick={() => setSelectedVideo(null)}>
               Close Video
             </button>
@@ -191,10 +201,10 @@ const MSHome = () => {
           {activeSection === 'online' ? (
             <div>
               <div>
-                <button className='onlinevideo-btn'  onClick={handleOnlineVideosClick}>
+                <button className='onlinevideo-btn bg-info' onClick={handleOnlineVideosClick}>
                   Online Videos
                 </button>
-                <button className='mevideo-btn' onClick={handleMeVideosClick}>ME Videos</button>
+                <button className='mevideo-btn bg-info' onClick={handleMeVideosClick}>ME Videos</button>
               </div>
               <h2 className='sidebar-feature-title'>Search Videos Online</h2>
               <div className="mt-3 mb-4">
@@ -204,20 +214,25 @@ const MSHome = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button style={{
-                  display: 'inline-block',
-                  padding: '10px 20px',
-                  marginLeft: '20px',
-                  backgroundColor: '#ADD8E6',
-                  color: 'white',
-                  fontFamily: 'sans-serif',
-                  fontStyle: 'bold',
-                  textDecoration: 'none',
-                  borderRadius: '4px',
-                  transition: 'background-color 0.3s ease',
-                  marginTop:'1rem'
-                  
-                }} onClick={handleSearch}>Search</button>
+                <button
+                  style={{
+                    display: 'inline-block',
+                    padding: '10px 20px',
+                    marginLeft: '20px',
+                    backgroundColor: '#ADD8E6',
+                    color: 'white',
+                    fontFamily: 'sans-serif',
+                    fontStyle: 'bold',
+                    textDecoration: 'none',
+                    borderRadius: '4px',
+                    transition: 'background-color 0.3s ease',
+                    marginTop: '1rem'
+
+                  }}
+className='bg-primary'
+                  onClick={handleSearch}>
+                  Search
+                </button>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0%' }}>{renderVideos()}</div>
             </div>

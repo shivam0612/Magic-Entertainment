@@ -156,10 +156,19 @@
   margin-top: 20px;
 }
 
+.card-title{
+  font-weight: bold;
+}
+.card-text{
+  font-weight: 400;
+}
 .card-mshome {
   display: flex;
   width: 100%;
   margin: auto;
+}
+.card-mshome:hover{
+background-color: rgba(211, 211, 211, 0.537);
 }
 
 .card-mshome .col-md-4 {
@@ -180,11 +189,109 @@
 .card-mshome .card-img-mshome {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  border-radius: 5px;
+  object-fit: fill;
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  .ms-home-content {
+    flex-direction: column;
+  }
+
+  .video-player-section {
+    margin-right: 0;
+    margin-bottom: 2rem;
+  }
+
+  .sidebar-section {
+    margin-top: 2rem;
+  }
+
+  .sidebar-buttons {
+    margin-bottom: 1rem;
+  }
+
+  .videos-container .card-mshome {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .videos-container .card-mshome .col-md-4,
+  .videos-container .card-mshome .col-md-8 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
 /* Online virtual Museum */
+/* Animations */
+@-webkit-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-moz-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-o-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-webkit-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@-moz-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@-o-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+
+.museum-title{
+  font-size: 2rem;
+  color: #444;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+/* Main styles */
+.museum-page {
+  /* img size is 50x50 */
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
+  -webkit-animation: bg-scrolling-reverse 0.92s infinite;
+  /* Safari 4+ */
+  -moz-animation: bg-scrolling-reverse 0.92s infinite;
+  /* Fx 5+ */
+  -o-animation: bg-scrolling-reverse 0.92s infinite;
+  /* Opera 12+ */
+  animation: bg-scrolling-reverse 0.92s infinite;
+  /* IE 10+ */
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -o-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
 .museum-card {
   display: flex;
   flex-wrap: wrap;
@@ -198,6 +305,9 @@
   margin-bottom: 3rem;
   text-transform: uppercase;
   text-align: center;
+  text-shadow:0px  1px 2px black;
+  font-weight: 900;
+
 }
 
 .artwork-title {
@@ -621,3 +731,23 @@
   padding: 0.4rem;
   width: 5rem;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

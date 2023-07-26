@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Row, Col } from 'antd';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Card, Row, Col, Spin } from 'antd';
 
 const MuseumHome = () => {
   const [artworks, setArtworks] = useState([]);
@@ -90,36 +90,51 @@ const MuseumHome = () => {
   }
 
   return (
-    <section className='body-tag' style={{ paddingBottom: '2rem' }}>
+    <section className='body-tag museum-page'>
+      {/* Add Header */}
+      <header>
+        <h1 className='museum-title pt-5 ' style={{}}>Online Virtual Museum</h1>
+        {/* Add any additional content or logo */}
+      </header>
+
       <div className='museum-container'>
-        <h2 className='museum-heading pt-5'>Online Virtual Museum</h2>
-        <div className='museum-card'>
-          <Row gutter={[16, 16]}>
-            {artworks.map((artwork) => (
-              <Col span={8} key={artwork.id}>
-                <Card
-                  className='artwork-card'
-                  onClick={() => handleCardClick(artwork)}
-                >
-                  <img
-                    src={artwork.webImage.url}
-                    alt={artwork.title}
-                    style={{ width: '100%' }}
-                  />
-                  <div className='artwork-desc'>
-                    <p className='artwork-title'>{artwork.title}</p>
-                    <p className='artwork-title'>
-                      <strong>Artist: </strong>
-                      {artwork.principalOrFirstMaker}
-                    </p>
-                  </div>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </div>
+        {/* Display loading spinner while loading */}
+        {loading ? (
+          <div className='loading-spinner'>
+            <Spin size='large' />
+          </div>
+        ) : (
+          <div className='museum-card'>
+            <Row gutter={[16, 16]}>
+              {artworks.map((artwork) => (
+                <Col span={8} key={artwork.id}>
+                  <Card
+                    className='artwork-card'
+                    onClick={() => handleCardClick(artwork)}
+                  >
+                    <img
+                      src={artwork.webImage.url}
+                      alt={artwork.title}
+                      style={{ width: '100%' }}
+                    />
+                    <div className='artwork-desc'>
+                      <p className='artwork-title'>{artwork.title}</p>
+                      <p className='artwork-title'>
+                        <strong>Artist: </strong>
+                        {artwork.principalOrFirstMaker}
+                      </p>
+                    </div>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </div>
+        )}
       </div>
-      <ToastContainer /> {/* Toast container component */}
+
+  
+      {/* Toast container component */}
+      <ToastContainer />
     </section>
   );
 };

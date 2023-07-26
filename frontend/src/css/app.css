@@ -229,11 +229,15 @@ body {
   outline: .1rem solid #ccc;
   outline-offset: -1.5rem;
   cursor: pointer;
+  transition: transform 0.3s ease;
+
 }
 
 .custom-container .product-container .product:hover {
   outline-offset: 0;
   background-color: #e0f2f1;
+  transform: translateY(-5px); /* Add a slight lift effect on hover */
+
 }
 
 .custom-container .product-container .product img {
@@ -245,6 +249,7 @@ body {
 
 .custom-container .product-container .product:hover img {
   transform: scale(.9);
+  
 }
 
 .custom-container .product-container .product h3 {
@@ -261,6 +266,19 @@ body {
   font-size: 1rem;
   color: #444;
 }
+
+@media (max-width: 768px) {
+  .custom-container .product-container .product {
+    flex-basis: calc(50%);
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-container .product-container .product {
+    flex-basis: 100%;
+  }
+}
+
 
 /* profile page */
 .container-profile {
