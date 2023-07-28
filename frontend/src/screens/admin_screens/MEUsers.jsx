@@ -83,61 +83,87 @@ const UserRegistrationModal = ({ show, onClose, onRegister }) => {
       password,
       cpassword
     };
-    console.log(payload)
+
     if (password !== cpassword) {
       toast.error('Passwords do not match');
     } else {
       try {
         const res = await register(payload).unwrap();
-        navigate('/meusers')
+        onRegister(res.data); // Pass the new user data to the parent component
 
+        navigate('/meusers')
+        onClose(); // Close the modal
+        toast.success("New User Registered Successfully")
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
     }
 
+    useEffect(() => {
+
+    }, [submitHandler])
+  
+
   };
 
-  useEffect(() => {
-  
-  }, [submitHandler])
-  
+ 
   return (
     <Modal show={show} onHide={onClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>Register New User</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form >
+        <form style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', width:"80%", margin:"auto" }}>
           <div>
             <label>Name:</label>
-            <input type="text" name="name"
+          </div>
+          <div>
+            <input
+              type="text"
+              name="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               onBlur={validateUsername}
-              required />
+              required
+            />
+            {/* Add an error message for invalid username */}
+            {usernameError && <span style={{ color: 'red' }}>{usernameError}</span>}
           </div>
           <div>
             <label>Email:</label>
-            <input type="email" name="email"
+          </div>
+          <div>
+            <input
+              type="email"
+              name="email"
               value={email}
               onBlur={validateEmail}
               onChange={(e) => setEmail(e.target.value)}
-              required />
+              required
+            />
+            {/* Add an error message for invalid email */}
+            {emailError && <span style={{ color: 'red' }}>{emailError}</span>}
           </div>
           <div>
             <label>Phone:</label>
-            <input type="text" name="phone" value={phone}
+          </div>
+          <div>
+            <input
+              type="text"
+              name="phone"
+              value={phone}
               onChange={(e) => setPhone(e.target.value)}
               onBlur={validatePhone}
-              required />
+              required
+            />
+            {/* Add an error message for invalid phone number */}
+            {phoneError && <span style={{ color: 'red' }}>{phoneError}</span>}
           </div>
           <div>
             <label>Preference:</label>
-            <select name="preference"
-              value={preference}
-              onChange={(e) => setPreference(e.target.value)}
-            >
+          </div>
+          <div>
+            <select name="preference" value={preference} onChange={(e) => setPreference(e.target.value)}>
               <option value="Music">Music</option>
               <option value="Movies">Movies</option>
               <option value="Games">Games</option>
@@ -147,19 +173,33 @@ const UserRegistrationModal = ({ show, onClose, onRegister }) => {
           </div>
           <div>
             <label>Password:</label>
-            <input type="password" name="password"
+          </div>
+          <div>
+            <input
+              type="password"
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onBlur={validatePassword}
-              required />
+              required
+            />
+            {/* Add an error message for invalid password */}
+            {passwordError && <span style={{ color: 'red' }}>{passwordError}</span>}
           </div>
           <div>
             <label>Confirm Password:</label>
-            <input type="password" name="cpassword"
+          </div>
+          <div>
+            <input
+              type="password"
+              name="cpassword"
               value={cpassword}
               onChange={(e) => setCpassword(e.target.value)}
               onBlur={validateConfirmPassword}
-              required />
+              required
+            />
+            {/* Add an error message for password mismatch */}
+            {cpasswordError && <span style={{ color: 'red' }}>{cpasswordError}</span>}
           </div>
         </form>
       </Modal.Body>
@@ -171,8 +211,7 @@ const UserRegistrationModal = ({ show, onClose, onRegister }) => {
           Close
         </Button>
       </Modal.Footer>
-    </Modal>
-  );
+    </Modal>);
 };
 
 const MEUsers = () => {
@@ -181,10 +220,11 @@ const MEUsers = () => {
   const [showModal, setShowModal] = useState(false);
 
   // Fetch all users from the database
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
+
+  const handleRegisterComplete = (newUser) => {
+    setUsers((prevUsers) => [...prevUsers, newUser]); // Add the new user to the current user list
+  };
 
   const fetchUsers = async () => {
     try {
@@ -197,6 +237,11 @@ const MEUsers = () => {
     }
   };
 
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  
   const handleDelete = async (userId) => {
     try {
       // Replace the endpoint with your actual API endpoint to delete the user

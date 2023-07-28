@@ -88,6 +88,7 @@ const UploadVideo = asyncHandler(async (req, res) => {
 const getVideos = asyncHandler(async (req, res) => {
     try {
         const videos = await Video.find();
+
         // console.log(videos)
         return res.status(200).json({ success: true, videos });
     } catch (err) {

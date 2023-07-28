@@ -102,7 +102,7 @@ const MSHome = () => {
     }
 
     if (!videoss || videoss.length === 0) {
-      return <p>No videos found.</p>;
+      return <p className='text-danger'>You Are Not Subscribed</p>;
     }
 
     return videoss.videos.map((video) => (
