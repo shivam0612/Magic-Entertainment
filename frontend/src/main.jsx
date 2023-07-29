@@ -35,6 +35,7 @@ import PuzzleGame from './screens/games/PuzzleGame.jsx'
 import MEUsers from './screens/admin_screens/MEUsers.jsx';
 import MEVideos from './screens/admin_screens/MEVideos.jsx';
 import KaraokeHome from './screens/karaoke/karaokeHome.jsx'
+import ChatHome from './screens/ChatHome.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -64,6 +65,8 @@ const router = createBrowserRouter(
         <Route path='/meusers' element={< MEUsers />} />
         <Route path='/mevideos' element={<MEVideos />} />
         <Route path='/karaokehome' element={<KaraokeHome />} />
+        <Route path='/chathome' element={<ChatHome />} />
+
       </Route>
 
     </Route>

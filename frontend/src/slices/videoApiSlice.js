@@ -5,9 +5,10 @@ const VIDEO_URL = '/api/video';
 export const videoApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getVideos: builder.query({
-      query: () => ({
+      query: (userId) => ({
         url: `${VIDEO_URL}/getVideo`,
-        method: 'GET'
+        method: 'GET',
+        params: { userId }, // Pass the userId as a query parameter
       }),
     }),
   }),

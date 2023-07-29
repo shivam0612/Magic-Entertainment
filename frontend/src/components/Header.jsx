@@ -98,6 +98,11 @@ const Header = () => {
                       </NavLink>
                     </li>
                     <li className="nav-item">
+                      <NavLink className="nav-link" to="/chathome">
+                        Chat
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
                       <NavLink className="nav-link" style={{ color: '#27ae60' }} to="/profile">
                         {userInfo.name}
                       </NavLink>

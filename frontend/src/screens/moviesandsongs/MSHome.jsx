@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useGetVideosQuery } from '../../slices/videoApiSlice';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'; // Add this import
+import { FaRegSadTear } from 'react-icons/fa'; // Import the sad tear icon
 
 const MSHome = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -10,7 +12,22 @@ const MSHome = () => {
   const [activeSection, setActiveSection] = useState('online');
   const [isYouTubeVideo, setIsYouTubeVideo] = useState(true);
   const navigate = useNavigate()
-  const { data: videoss, isLoading, isError, refetch } = useGetVideosQuery();
+  const dispatch = useDispatch();
+
+  const { userInfo } = useSelector((state) => state.auth);
+  console.log(userInfo)
+
+  useEffect(() => {
+    // If userInfo is not available in the Redux store, you can dispatch an action to fetch it.
+    if (!userInfo) {
+      dispatch(/* Dispatch an action to fetch user information */);
+    }
+  }, [dispatch, userInfo]);
+
+  // Make sure userInfo._id is valid before using it in the query
+  const userId = userInfo ? userInfo._id : null;
+
+  const { data: videoss, isLoading, isError, refetch } = useGetVideosQuery(userInfo._id);
 
   const onlineVideoBtnClass = activeSection === 'online' ? 'active-button' : '';
   const meVideoBtnClass = activeSection === 'me' ? 'active-button' : '';
@@ -34,6 +51,9 @@ const MSHome = () => {
     navigate('/video/upload');
   };
 
+  const subscribenow = () => {
+    navigate('/submainhome')
+  }
 
   const handleSearch = async () => {
     try {
@@ -101,9 +121,18 @@ const MSHome = () => {
       return <p>Error occurred while fetching videos.</p>;
     }
 
-    if (!videoss || videoss.length === 0) {
-      return <p className='text-danger'>You Are Not Subscribed</p>;
+    if (!videoss || !videoss.data || videoss.data.videos.length === 0) {
+      return (
+        <div className='text-center my-5 p-3 shadow card' style={{ width: "100%", textAlign: "center", alignContent: "center", alignItems: "center" }}>
+          <FaRegSadTear size={50} className='text-danger' />
+          <h3 className='mt-2 border-light'>You Are Not Subscribed</h3>
+          <button onClick={subscribenow} className='subscribe-btn'>
+            Subscribe Now
+          </button>
+        </div>
+      );
     }
+
 
     return videoss.videos.map((video) => (
       <div
@@ -229,7 +258,7 @@ const MSHome = () => {
                     marginTop: '1rem'
 
                   }}
-className='bg-primary'
+                  className='bg-primary'
                   onClick={handleSearch}>
                   Search
                 </button>

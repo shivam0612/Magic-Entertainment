@@ -4,6 +4,7 @@ import ffmpeg from 'fluent-ffmpeg';
 ffmpeg.setFfmpegPath('C:/Users/Administrator/Music/ffmpeg/bin/ffmpeg.exe');
 ffmpeg.setFfprobePath('C:/Users/Administrator/Music/ffmpeg/bin/ffprobe.exe');
 import Video from '../models/Video.js'
+import Subscription from '../models/subscriptionModel.js';
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -88,9 +89,19 @@ const UploadVideo = asyncHandler(async (req, res) => {
 const getVideos = asyncHandler(async (req, res) => {
     try {
         const videos = await Video.find();
+        const { userId } = req.query;
+        // Check if the userId exists in the Subscription collection
+        const subscription = await Subscription.findOne({ userid: userId });
 
-        // console.log(videos)
-        return res.status(200).json({ success: true, videos });
+        if (subscription) {
+            // User is subscribed
+            return res.status(200).json({ success: true, videos });
+        } else {
+            // User is not subscribed
+            return res.status(200).json({ success: true, videos: null });
+        }
+
+
     } catch (err) {
         console.log(err)
         return res.status(400).send(err);

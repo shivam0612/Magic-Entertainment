@@ -29,6 +29,7 @@
     "openai": "^3.3.0",
     "redis": "^4.6.7",
     "saslprep": "^1.0.3",
+    "socket.io": "^4.7.1",
     "supports-color": "^9.4.0"
   },
   "devDependencies": {
