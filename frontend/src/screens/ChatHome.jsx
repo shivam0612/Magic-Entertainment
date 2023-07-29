@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, forwardRef } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
@@ -8,6 +8,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useSelector } from 'react-redux';
 import { getAuth, signInAnonymously } from 'firebase/auth';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { v4 as uuidv4 } from 'uuid';
 
 firebase.initializeApp({
   apiKey: "AIzaSyAJpWb0ENyZLywhdfYTQLgsU7kGMIkolSA",
@@ -16,8 +17,7 @@ firebase.initializeApp({
   storageBucket: "magicentertainment-1.appspot.com",
   messagingSenderId: "226539778652",
   appId: "1:226539778652:web:38e8172b060d477fc62c99",
-  measurementId: "G-SNE59QTF6J"
-});
+  measurementId: "G-SNE59QTF6J"});
 
 const firestore = firebase.firestore();
 const analytics = firebase.analytics();
@@ -63,6 +63,7 @@ function ChatHome() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid: _id,
       name: userName,
+      id: uuidv4(), // Generate a unique ID for each message
     });
 
     setFormValue('');
@@ -74,10 +75,16 @@ function ChatHome() {
       <header>
         <h1>🔥Message Now💬</h1>
       </header>
-      <main className='shadow'>
-        {messages && messages.map((msg, index) => (
-          <ChatMessage key={index} message={msg} userInfo={userInfo} ref={index === messages.length - 1 ? lastMessageRef : null} />
-        ))}
+      <main className="shadow">
+        {messages &&
+          messages.map((msg) => (
+            <ChatMessage
+              key={msg.id}
+              message={msg}
+              userInfo={userInfo}
+              ref={msg === messages[messages.length - 1] ? lastMessageRef : null}
+            />
+          ))}
         <span ref={dummy}></span>
       </main>
       <Form onSubmit={sendMessage}>
@@ -91,8 +98,8 @@ function ChatHome() {
           </Col>
           <Col xs={3}>
             <Button type="submit" disabled={!formValue}>
-  send
-              </Button>
+              send
+            </Button>
           </Col>
         </Row>
       </Form>
@@ -100,16 +107,16 @@ function ChatHome() {
   );
 }
 
-function ChatMessage(props) {
-  const { text, uid,name } = props.message;
+const ChatMessage = forwardRef((props, ref) => {
+  const { text, uid, name } = props.message;
   const isSentByCurrentUser = uid === props.userInfo._id;
   const messageClass = isSentByCurrentUser ? 'sent' : 'received';
 
   return (
-    <div className={`message ${messageClass}`}>
+    <div ref={ref} className={`message ${messageClass}`}>
       <p>{name} : {text}</p>
     </div>
   );
-}
+});
 
 export default ChatHome;
