@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useGetVideosQuery } from '../../slices/videoApiSlice';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'; // Add this import
+import { useSelector } from 'react-redux';
 import { FaRegSadTear } from 'react-icons/fa'; // Import the sad tear icon
 
 const MSHome = () => {
@@ -12,20 +12,7 @@ const MSHome = () => {
   const [activeSection, setActiveSection] = useState('online');
   const [isYouTubeVideo, setIsYouTubeVideo] = useState(true);
   const navigate = useNavigate()
-  const dispatch = useDispatch();
-
   const { userInfo } = useSelector((state) => state.auth);
-  console.log(userInfo)
-
-  useEffect(() => {
-    // If userInfo is not available in the Redux store, you can dispatch an action to fetch it.
-    if (!userInfo) {
-      dispatch(/* Dispatch an action to fetch user information */);
-    }
-  }, [dispatch, userInfo]);
-
-  // Make sure userInfo._id is valid before using it in the query
-  const userId = userInfo ? userInfo._id : null;
 
   const { data: videoss, isLoading, isError, refetch } = useGetVideosQuery(userInfo._id);
 
@@ -37,7 +24,7 @@ const MSHome = () => {
     const fetchData = async () => {
       try {
         const res = await refetch();
-        // console.log(res);
+        console.log(res);
       } catch (error) {
         console.log(error);
         alert('Error occurred while fetching data');
@@ -51,9 +38,6 @@ const MSHome = () => {
     navigate('/video/upload');
   };
 
-  const subscribenow = () => {
-    navigate('/submainhome')
-  }
 
   const handleSearch = async () => {
     try {
@@ -77,6 +61,9 @@ const MSHome = () => {
       setIsYouTubeVideo(true);
     }
   };
+  const subscribenow = () => {
+    navigate('/submainhome')
+  }
 
   const renderVideos = () => {
     if (videos.length === 0) {
@@ -121,7 +108,11 @@ const MSHome = () => {
       return <p>Error occurred while fetching videos.</p>;
     }
 
-    if (!videoss || !videoss.data || videoss.data.videos.length === 0) {
+    if (!videoss || videoss.length === 0) {
+      return <p>No videos found.</p>;
+    }
+
+    if (videoss.videos === null) {
       return (
         <div className='text-center my-5 p-3 shadow card' style={{ width: "100%", textAlign: "center", alignContent: "center", alignItems: "center" }}>
           <FaRegSadTear size={50} className='text-danger' />

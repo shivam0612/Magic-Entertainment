@@ -539,22 +539,22 @@ background-color: rgba(211, 211, 211, 0.537);
 
 /* ChatHome.css */
 
-.App {
+.App-chat {
   text-align: center;
-  margin-top: 5rem;
+  margin-top: 3rem;
 }
 
-header {
-  margin-bottom: 20px;
+.chatheader {
+  margin-bottom: 10px;
 }
-header h1{
+.chatheader h1{
   font-size: 2rem;
   color: #444;
   margin-bottom: 1rem;
   text-transform: uppercase;
   text-align: center;}
 
-main {
+.chat-main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -566,7 +566,7 @@ main {
   overflow-y: auto;
   max-height: 50vh; /* Adjust this value as needed */
 }
-.message {
+.cmessage {
   border-radius: 8px;
   padding: 8px;
   margin-bottom: 10px;
@@ -587,14 +587,14 @@ main {
 }
 
 
-form {
+.chatform {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
 }
 
-input {
+.chatinput {
   flex: 1;
   height: 40px;
   margin-right: 10px;
@@ -603,7 +603,7 @@ input {
   padding: 5px 10px;
 }
 
-button {
+.chatbutton {
   height: 40px;
   width: max-content;
   padding: 5px;

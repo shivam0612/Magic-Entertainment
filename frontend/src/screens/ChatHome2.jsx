@@ -30,10 +30,13 @@ function ChatHome2() {
   const [showGlobalChat, setShowGlobalChat] = useState(false); // Step 1: Toggle state for ChatHome2
 
   const messagesRef = firestore.collection('messages-preference');
-  const query = messagesRef
-    .where('preference', '==', userInfo.preference) // Filter messages by user's preference
-    .orderBy('createdAt')
-    .limit(25);
+  const query = userInfo && userInfo.preference
+    ? messagesRef
+        .where('preference', '==', userInfo.preference)
+        .orderBy('createdAt')
+        .limit(25)
+    : messagesRef; // Default to the messagesRef if userInfo is not available or doesn't have "preference" field
+
 
   const [messages, setMessages] = useState([]); // Store the messages in component state
   const [formValue, setFormValue] = useState('');
@@ -92,7 +95,7 @@ function ChatHome2() {
 
   return (
     <>
-      <main className="shadow">
+      <main className="shadow chat-main">
         {messages &&
           messages.map((msg) => (
             <ChatMessage
@@ -104,17 +107,18 @@ function ChatHome2() {
           ))}
         <span ref={dummy}></span>
       </main>
-      <Form onSubmit={sendMessage}>
+      <Form onSubmit={sendMessage} className='chatform'>
         <Row>
           <Col xs={9}>
             <Form.Control
               value={formValue}
+              className='chatinput'
               onChange={(e) => setFormValue(e.target.value)}
               placeholder="say something nice"
             />
           </Col>
           <Col xs={3}>
-            <Button type="submit" disabled={!formValue}>
+            <Button className='chatbutton' type="submit" disabled={!formValue}>
               send
             </Button>
           </Col>
@@ -130,7 +134,7 @@ const ChatMessage = forwardRef((props, ref) => {
   const messageClass = isSentByCurrentUser ? 'sent' : 'received';
 
   return (
-    <div ref={ref} className={`message ${messageClass}`}>
+    <div ref={ref} className={`cmessage ${messageClass}`}>
       <p>{name} : {text}</p>
     </div>
   );

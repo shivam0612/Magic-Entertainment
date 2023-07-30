@@ -27,7 +27,7 @@ const analytics = firebase.analytics();
 const auth = getAuth();
 
 function ChatHome() {
-  const dummy = useRef();
+  const dummy = useRef(null);
   const messagesRef = firestore.collection('messages');
   const query = messagesRef.orderBy('createdAt').limit(25);
   const [showGlobalChat, setShowGlobalChat] = useState(false); // Step 1: Toggle state for ChatHome2
@@ -41,6 +41,7 @@ function ChatHome() {
     setShowGlobalChat((prev) => !prev); // Step 2: Toggle the state on button click
   };
 
+  
   useEffect(() => {
     signInAnonymously(auth)
       .then(() => {
@@ -58,7 +59,7 @@ function ChatHome() {
   const lastMessageRef = useRef();
 
   useEffect(() => {
-    dummy.current.scrollIntoView({ behavior: 'smooth' });
+    dummy.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, formValue]);
 
   const sendMessage = async (e) => {
@@ -81,21 +82,21 @@ function ChatHome() {
 
   return (
     <>
-      <Container className="App  " >
-        <header>
+      <Container className="App-chat  " >
+        <div className='chatheader'>
           <h1>🔥Message Now💬</h1>
           {/* Step 2: Toggle button */}
           <Button onClick={handleToggle} variant="primary">
             {showGlobalChat ?  'Global chat' : 'People with similar interest'}
           </Button>
-        </header>
+        </div>
 
         {showGlobalChat ? (
           <ChatHome2 />
         ) : (
           <>
 
-            <main className="shadow">
+            <main className="shadow chat-main">
               {messages &&
                 messages.map((msg) => (
                   <ChatMessage
@@ -107,17 +108,18 @@ function ChatHome() {
                 ))}
               <span ref={dummy}></span>
             </main>
-            <Form onSubmit={sendMessage}>
+            <Form onSubmit={sendMessage} className='chatform'>
               <Row>
                 <Col xs={9}>
                   <Form.Control
                     value={formValue}
+                    className='chatinput'
                     onChange={(e) => setFormValue(e.target.value)}
                     placeholder="say something nice"
                   />
                 </Col>
                 <Col xs={3}>
-                  <Button type="submit" disabled={!formValue}>
+                  <Button className='chatbutton' type="submit" disabled={!formValue}>
                     send
                   </Button>
                 </Col>
@@ -137,7 +139,7 @@ const ChatMessage = forwardRef((props, ref) => {
   const messageClass = isSentByCurrentUser ? 'sent' : 'received';
 
   return (
-    <div ref={ref} className={`message ${messageClass}`}>
+    <div ref={ref} className={`cmessage ${messageClass}`}>
       <p>{name} : {text}</p>
     </div>
   );

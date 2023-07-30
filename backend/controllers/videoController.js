@@ -95,6 +95,7 @@ const getVideos = asyncHandler(async (req, res) => {
 
         if (subscription) {
             // User is subscribed
+            const videos = await Video.find()
             return res.status(200).json({ success: true, videos });
         } else {
             // User is not subscribed

@@ -36,6 +36,9 @@ import MEUsers from './screens/admin_screens/MEUsers.jsx';
 import MEVideos from './screens/admin_screens/MEVideos.jsx';
 import KaraokeHome from './screens/karaoke/karaokeHome.jsx'
 import ChatHome from './screens/ChatHome.jsx';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root'); // Set the root element as the app element
 
 const router = createBrowserRouter(
   createRoutesFromElements(
