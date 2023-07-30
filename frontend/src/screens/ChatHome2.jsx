@@ -9,36 +9,38 @@ import { useSelector } from 'react-redux';
 import { getAuth, signInAnonymously } from 'firebase/auth';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-import ChatHome2 from './ChatHome2.jsx'; // Import the ChatHome2 component
-
 
 firebase.initializeApp({
-  apiKey: "AIzaSyAJpWb0ENyZLywhdfYTQLgsU7kGMIkolSA",
-  authDomain: "magicentertainment-1.firebaseapp.com",
-  projectId: "magicentertainment-1",
-  storageBucket: "magicentertainment-1.appspot.com",
-  messagingSenderId: "226539778652",
-  appId: "1:226539778652:web:38e8172b060d477fc62c99",
-  measurementId: "G-SNE59QTF6J"
+    apiKey: "AIzaSyAJpWb0ENyZLywhdfYTQLgsU7kGMIkolSA",
+    authDomain: "magicentertainment-1.firebaseapp.com",
+    projectId: "magicentertainment-1",
+    storageBucket: "magicentertainment-1.appspot.com",
+    messagingSenderId: "226539778652",
+    appId: "1:226539778652:web:38e8172b060d477fc62c99",
+    measurementId: "G-SNE59QTF6J"
 });
 
 const firestore = firebase.firestore();
 const analytics = firebase.analytics();
 const auth = getAuth();
 
-function ChatHome() {
-  const dummy = useRef();
-  const messagesRef = firestore.collection('messages');
-  const query = messagesRef.orderBy('createdAt').limit(25);
+function ChatHome2() {
+  const dummy = useRef(null);
+  const { userInfo } = useSelector((state) => state.auth);
   const [showGlobalChat, setShowGlobalChat] = useState(false); // Step 1: Toggle state for ChatHome2
 
-  const [messages] = useCollectionData(query, { idField: 'id' });
+  const messagesRef = firestore.collection('messages-preference');
+  const query = messagesRef
+    .where('preference', '==', userInfo.preference) // Filter messages by user's preference
+    .orderBy('createdAt')
+    .limit(25);
+
+  const [messages, setMessages] = useState([]); // Store the messages in component state
   const [formValue, setFormValue] = useState('');
-  const { userInfo } = useSelector((state) => state.auth);
   const [userName, setUserName] = useState('');
 
   const handleToggle = () => {
-    setShowGlobalChat((prev) => !prev); // Step 2: Toggle the state on button click
+    setShowGlobalChat((prev) => !prev);
   };
 
   useEffect(() => {
@@ -54,6 +56,15 @@ function ChatHome() {
       setUserName(userInfo.name);
     }
   }, [userInfo]);
+
+  useEffect(() => {
+    const unsubscribe = query.onSnapshot((snapshot) => {
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setMessages(data);
+    });
+
+    return () => unsubscribe();
+  }, [query]);
 
   const lastMessageRef = useRef();
 
@@ -81,52 +92,34 @@ function ChatHome() {
 
   return (
     <>
-      <Container className="App  " >
-        <header>
-          <h1>🔥Message Now💬</h1>
-          {/* Step 2: Toggle button */}
-          <Button onClick={handleToggle} variant="primary">
-            {showGlobalChat ?  'Global chat' : 'People with similar interest'}
-          </Button>
-        </header>
-
-        {showGlobalChat ? (
-          <ChatHome2 />
-        ) : (
-          <>
-
-            <main className="shadow">
-              {messages &&
-                messages.map((msg) => (
-                  <ChatMessage
-                    key={msg.id}
-                    message={msg}
-                    userInfo={userInfo}
-                    ref={msg === messages[messages.length - 1] ? lastMessageRef : null}
-                  />
-                ))}
-              <span ref={dummy}></span>
-            </main>
-            <Form onSubmit={sendMessage}>
-              <Row>
-                <Col xs={9}>
-                  <Form.Control
-                    value={formValue}
-                    onChange={(e) => setFormValue(e.target.value)}
-                    placeholder="say something nice"
-                  />
-                </Col>
-                <Col xs={3}>
-                  <Button type="submit" disabled={!formValue}>
-                    send
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
-          </>
-        )}
-      </Container>
-
+      <main className="shadow">
+        {messages &&
+          messages.map((msg) => (
+            <ChatMessage
+              key={msg.id}
+              message={msg}
+              userInfo={userInfo}
+              ref={msg === messages[messages.length - 1] ? lastMessageRef : null}
+            />
+          ))}
+        <span ref={dummy}></span>
+      </main>
+      <Form onSubmit={sendMessage}>
+        <Row>
+          <Col xs={9}>
+            <Form.Control
+              value={formValue}
+              onChange={(e) => setFormValue(e.target.value)}
+              placeholder="say something nice"
+            />
+          </Col>
+          <Col xs={3}>
+            <Button type="submit" disabled={!formValue}>
+              send
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </>
   );
 }
@@ -143,4 +136,4 @@ const ChatMessage = forwardRef((props, ref) => {
   );
 });
 
-export default ChatHome;
+export default ChatHome2;
