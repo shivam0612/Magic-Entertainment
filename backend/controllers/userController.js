@@ -5,6 +5,7 @@ import nodemailer from 'nodemailer';
 import Subscription from '../models/subscriptionModel.js';
 import axios from 'axios'
 import redis from "redis"
+import crypto from 'crypto';
 
 const redisclient = redis.createClient({ // Corrected variable name to redisclient
   host: '127.0.0.1',
@@ -224,7 +225,7 @@ const addSubscription = asyncHandler(async (req, res) => {
 
 const getSubscription = asyncHandler(async (req, res) => {
   const userId = req.params.userid;
-  
+
   try {
     const data = await Subscription.findOne({ userid: userId });
     if (!data) {
@@ -261,7 +262,7 @@ const getartwork = asyncHandler(async (req, res) => {
 
     if (cachedData) {
       const responseDataRedis = JSON.parse(cachedData); // Parse the cached data back to an array of objects
-      res.json(responseDataRedis );
+      res.json(responseDataRedis);
     } else {
       const apiKey = '1XhjQJNH';
       const apiUrl = 'https://www.rijksmuseum.nl/api/en/collection';
@@ -286,7 +287,7 @@ const getartwork = asyncHandler(async (req, res) => {
   }
 });
 
-const getUsers = asyncHandler(async (req,res) => {
+const getUsers = asyncHandler(async (req, res) => {
   try {
     const excludedUserId = "64be7487c7e3c685cd39cb1d"; // The user ID to exclude
     const data = await User.find({ _id: { $ne: excludedUserId } });
@@ -318,6 +319,82 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 });
 
+const resetPassword = asyncHandler(async (req, res) => {
+  const { resetemail } = req.body;
+
+  // 1. Find the user in the database based on the provided email address.
+  const user = await User.findOne({ email: resetemail });
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  // 2. Generate a password reset token and store it in the user's document in the database.
+  const token = crypto.randomBytes(20).toString('hex');
+  user.resetPasswordToken = token;
+  user.resetPasswordExpires = Date.now() + 3600000; // Token valid for 1 hour
+
+  await user.save();
+
+  // Create a transporter
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'shivampatel868@gmail.com',
+      pass: 'cskkcvfzdswlcwkp',
+    },
+  });
+
+  const mailOptions = {
+    from: 'Magicentertainment@FUN.com',
+    to: resetemail,
+    subject: 'Password Reset',
+    text: `Reset Your Password with the given link: http://localhost:3000/updatepassword/${token}`,
+  };
+
+  transporter
+    .sendMail(mailOptions)
+    .then((info) => {
+      res.status(200).json({ message: 'Password reset email sent successfully' });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ message: 'Failed to send reset password email' });
+    });
+});
+
+const updatePassword = asyncHandler(async (req, res) => {
+  const {token, password } = req.body;
+  // const token = 'f377c3bfe25467f203cc793925a353f9f2bf39ed'
+  // console.log({ token, password })
+
+  try {
+    // Find the user with the matching reset token and resetPasswordExpires not expired
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    // Update the user's password and resetPasswordToken fields
+    user.password = password;
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+
+    await user.save();
+
+    res.json({ message: 'Password reset successful' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to reset password. Please try again.' });
+  }
+});
+
+
+
 export {
   authUser,
   registerUser,
@@ -330,5 +407,7 @@ export {
   deleteSubscription,
   getartwork,
   getUsers,
-  deleteUser
+  deleteUser,
+  resetPassword,
+  updatePassword,
 };

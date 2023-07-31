@@ -10,7 +10,9 @@ import {
   getSubscription,
   deleteSubscription,
   getUsers,
-  deleteUser
+  deleteUser,
+  resetPassword,
+  updatePassword
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { sendContactEmail } from '../controllers/userController.js';
@@ -33,5 +35,6 @@ router.delete('/deletesubscription/:userid', deleteSubscription);
 router.get('/getartworks', getartwork)
 router.get('/getusers', getUsers)
 router.delete('/deleteuser/:userid', deleteUser)
-
+router.post('/forgetpassword', resetPassword)
+router.put('/updatepassword', updatePassword); // Add this route for updating the password
 export default router;

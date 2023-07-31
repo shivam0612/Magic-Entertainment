@@ -37,6 +37,7 @@ import MEVideos from './screens/admin_screens/MEVideos.jsx';
 import KaraokeHome from './screens/karaoke/karaokeHome.jsx'
 import ChatHome from './screens/ChatHome.jsx';
 import Modal from 'react-modal';
+import ResetPasswordScreen from './screens/ResetPasswordScreen.jsx'; // Replace 'path/to' with the actual path to your ResetPasswordScreen component file
 
 Modal.setAppElement('#root'); // Set the root element as the app element
 
@@ -50,6 +51,7 @@ const router = createBrowserRouter(
       <Route path='/contact' element={<ContactScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
       {/* <Route path='/mshome' element={<MSHome />} /> */}
+      <Route path='/updatepassword/:token' element={<ResetPasswordScreen />} />
 
 
       <Route path='' element={<PrivateRoute />}>

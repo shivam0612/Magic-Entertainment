@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoginMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
+import { Form, Button, Row, Col, Modal } from 'react-bootstrap'; // Import Modal from react-bootstrap
+
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
+  const [showModal, setShowModal] = useState(false); // State to control the modal visibility
+  const [resetemail, setResetEmail] = useState('')
 
   const validateEmail = () => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -68,6 +70,42 @@ const LoginScreen = () => {
     }
   };
 
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('/api/users/forgetpassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ resetemail }), // Send the email as the payload
+      });
+
+      // Check the response status to handle success or failure
+      if (response.ok) {
+        toast.success('Password reset email sent successfully.');
+        handleCloseModal();
+      } else {
+        // Handle the error when the API call fails
+        const errorData = await response.json();
+        toast.error(errorData.message || 'Failed to reset password. Please try again.');
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      toast.error('Failed to reset password. Please try again.');
+    }
+  };
+
+
   return (
     <FormContainer>
       <section className="body-tag vh-100 login-s">
@@ -105,19 +143,14 @@ const LoginScreen = () => {
                   {passwordError && <div className="text-danger">{passwordError}</div>}
                 </div>
 
+                {/* Forgot password link */}
                 <div className="d-flex justify-content-around align-items-center mb-4">
-                  {/* Checkbox */}
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="form1Example3"
-                      defaultChecked={false}
-                    />                                       <label className="form-check-label" htmlFor="form1Example3">Remember me</label>
-                  </div>
-                  <a href="#!">Forgot password?</a>
+                  {/* Show the modal when the "Forgot password?" link is clicked */}
+                  <a href="#!" onClick={handleShowModal}>
+                    Forgot password?
+                  </a>
                 </div>
+
 
                 {/* Submit button */}
                 <button
@@ -146,6 +179,36 @@ const LoginScreen = () => {
           </div>
         </div>
       </section>
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Reset Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* Text message */}
+          <p>Enter email address to reset your password:</p>
+          {/* Input field */}
+          <input
+            type="email"
+            name="email"
+            className="form-control"
+            value={resetemail}
+            onChange={(e) => setResetEmail(e.target.value)}
+            onBlur={validateEmail}
+            placeholder="Enter Email"
+          />
+          {emailError && <div className="text-danger">{emailError}</div>}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+          {/* Submit button */}
+          <Button variant="primary" onClick={handleResetPassword}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </FormContainer>
   );
 };
