@@ -139,7 +139,7 @@ const ChatMessage = forwardRef((props, ref) => {
   const messageClass = isSentByCurrentUser ? 'sent' : 'received';
 
   return (
-    <div ref={ref} className={`cmessage ${messageClass}`}>
+    <div ref={ref} className={`body-tag cmessage ${messageClass}`}>
       <p>{name} : {text}</p>
     </div>
   );

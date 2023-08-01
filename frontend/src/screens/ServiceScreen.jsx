@@ -38,13 +38,7 @@ const ServiceScreen = () => {
             <h3>Gaming</h3>
             <div className="availability">Play, Win, Repeat, Dominate, Conquer</div>
           </div>
-          
-          <div className="product shadow" data-name="p-2" onClick={() => handleCardClick('karaokehome')}>
-            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="" />
-            <h3>Karaoke</h3>
-            <div className="availability">Sing Your Heart Out, Everywhere</div>
-          </div>
-
+   
           <div className="product shadow" data-name="p-4" onClick={() => handleCardClick('others')}>
             <img
               src="https://images.unsplash.com/photo-1497005367839-6e852de72767?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=867&q=80"
