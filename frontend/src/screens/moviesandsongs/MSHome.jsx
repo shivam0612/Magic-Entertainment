@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useGetVideosQuery } from '../../slices/videoApiSlice';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { FaRegSadTear } from 'react-icons/fa'; // Import the sad tear icon
+import { FaRegSadTear, FaDownload } from 'react-icons/fa'; // Import the sad tear icon
+import img from '../../images/download-icon.png';
 
 const MSHome = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -70,11 +71,15 @@ const MSHome = () => {
       return <p>No videos found.</p>;
     }
 
+    const handleDownload = (videoId) => {
+      window.open(videoId, '_blank'); // Open the modified URL in a new tab
+    };
+
     return videos.map((video) => (
       <div
         key={video.id.videoId}
         className="card-mshome card p-2 mb-3 shadow"
-        style={{ height: "10rem" }}
+        style={{ height: "max-content" }}
         onClick={() => openVideo(video.id.videoId)}
       >
         <div className="row no-gutters">
@@ -92,6 +97,9 @@ const MSHome = () => {
             <div className="card-body">
               <h5 className="card-title" style={{ marginBottom: '8px', maxHeight: '3rem', overflow: 'hidden', textOverflow: 'ellipsis' }}>{video.snippet.title}</h5>
               <p style={{ marginBottom: '8px', maxHeight: '3rem', overflow: 'hidden', textOverflow: 'ellipsis' }} className="card-text">{video.snippet.description}</p >
+              <button className="download-btn border-0" style={{ backgroundColor: "transparent" }} onClick={() => handleDownload(`https://www.ssyoutube.com/watch?v=${video.id.videoId}`)}>
+                <img height={30} width={30} src={img} alt='img-download' />
+              </button>
             </div>
           </div>
         </div>
@@ -117,20 +125,37 @@ const MSHome = () => {
         <div className='text-center my-5 p-3 shadow card' style={{ width: "100%", textAlign: "center", alignContent: "center", alignItems: "center" }}>
           <FaRegSadTear size={50} className='text-danger' />
           <h3 className='mt-2 border-light'>You Are Not Subscribed</h3>
-          <button onClick={subscribenow} className='subscribe-btn'>
+          <button onClick={subscribenow} className='subscribe-btn '>
             Subscribe Now
           </button>
         </div>
       );
     }
 
+    const handleDownload = async (videoId, title) => {
+      try {
+        const response = await fetch(videoId);
+        const blob = await response.blob();
+    // console.log(response)
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${title}.mp4`; // You can customize the filename here, e.g., 'my_video.mp4'
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        console.log('Error while downloading video:', error);
+      }
+    };
+    
 
     return videoss.videos.map((video) => (
       <div
         key={video._id}
         className="card mb-3 p-2 shadow"
-        style={{ width: '80%', margin: 'auto' }}
-
+        style={{ width: '80%', margin: 'auto', height: "max-content" }}
       >
         <div className="row no-gutters">
           <div className="col-md-4">
@@ -148,6 +173,9 @@ const MSHome = () => {
             <div className="card-body">
               <h5 className="card-title" style={{ marginBottom: '8px', maxHeight: '3rem', overflow: 'hidden', textOverflow: 'ellipsis' }}>{video.title}</h5>
               <p className="card-text" style={{ overflow: "hidden" }}>{video.description}</p>
+              <button className="download-btn border-0" style={{ backgroundColor: "transparent" }} onClick={() => handleDownload(`http://localhost:5000/${video.filePath}`,`${video.title}`)}>
+                <img height={30} width={30} src={img} alt='img-download' />
+              </button>
             </div>
           </div>
         </div>
@@ -187,7 +215,7 @@ const MSHome = () => {
             ) : (
               <div>
                 <img
-                  src="https://media.giphy.com/media/ITRemFlr5tS39AzQUL/giphy.gif"
+                  src="https://media.giphy.com/media/94P1LEMyuVEeA/giphy.gif"
                   alt="GIF"
                   width="600"
                   height="400"

@@ -131,10 +131,16 @@ body {
 
 .home {
   display: flex;
-  height: calc(100vh - 82px);
+  height: calc(100vh - 80px);
   position: relative;
+  background: hsla(152, 100%, 50%, 1);
+  background: linear-gradient(270deg, hsla(152, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 40%, hsla(0, 0%, 98%, 1) 82%, hsla(0, 0%, 100%, 1) 100%);
+  background: -moz-linear-gradient(270deg, hsla(152, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 40%, hsla(0, 0%, 98%, 1) 82%, hsla(0, 0%, 100%, 1) 100%);
+  background: -webkit-linear-gradient(270deg, hsla(152, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 40%, hsla(0, 0%, 98%, 1) 82%, hsla(0, 0%, 100%, 1) 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#00ff87", endColorstr="#60efff", GradientType=1);
 }
 
+/* 
 .left-side {
   flex: 1;
   background-color: lightblue;
@@ -143,7 +149,7 @@ body {
 .right-side {
   flex: 1;
   background-color: rgb(252, 252, 167);
-}
+} */
 
 .welcome-text {
   position: absolute;
@@ -163,13 +169,14 @@ body {
   font-size: 3rem;
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: rgba(251, 251, 251, 0.01);
-  background-image: url("https://images.unsplash.com/photo-1524334228333-0f6db392f8a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");
+  background-image: url("https://images.unsplash.com/photo-1554050857-c84a8abdb5e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=327&q=80");
   background-repeat: repeat;
   -webkit-background-clip: text;
   animation: animate 15s ease-in-out infinite;
   text-align: center;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: bolder !important;
+  /* Add this line to make the text bolder */
 }
 
 
@@ -193,40 +200,71 @@ body {
   }
 }
 
-.service-section h2{
+.service-section {
+  height: 50vh;
+}
+
+.service-section h2 {
   margin-top: 6rem;
   margin-bottom: 2.5rem;
 }
 
-.service-item{
+.service-item {
   margin-bottom: 1rem;
   width: 25%;
-  
+
 }
 
-.service-item img{
+.service-item img {
   margin-bottom: 1rem;
   border-radius: 10px;
   height: 30vh;
-  width: auto ;
+  width: auto;
   padding: 0.2rem;
   transition: transform 0.3s ease-in-out;
 
 }
 
-.service-item img:hover{
-  transform: scale(1); /* You can adjust the scale value to control the enlargement */
+.service-item img:hover {
+  transform: scale(1);
+  /* You can adjust the scale value to control the enlargement */
 
 }
 
-.chat-section{
-  padding-top: 0;
+.chat-section {
+  padding-top: 18vh;
 }
+
+.chat-option {
+  background-color: transparent !important;
+  transition: transform 0.3s ease;
+  /* Adjust the transition speed as needed */
+}
+
+/* Make the cards grow larger on hover */
+.chat-option:hover {
+  transform: scale(1.1);
+}
+
+.contactsecdiv {
+  background-color: transparent !important;
+  transition: transform 0.3s ease;
+}
+
+.contactsecdiv:hover {
+  transform: scale(1.1);
+}
+
+.contact-section button:hover {
+  background-color: #0c5ce4;
+}
+
 /* Service page */
 
-.contactsec{
+.contactsec {
   margin-top: 7rem;
 }
+
 .custom-container {
   max-width: 100vw;
   padding: 3rem 2rem;
@@ -270,7 +308,8 @@ body {
 .custom-container .product-container .product:hover {
   outline-offset: 0;
   background-color: #e0f2f1;
-  transform: translateY(-5px); /* Add a slight lift effect on hover */
+  transform: translateY(-5px);
+  /* Add a slight lift effect on hover */
 
 }
 
@@ -283,7 +322,7 @@ body {
 
 .custom-container .product-container .product:hover img {
   transform: scale(.9);
-  
+
 }
 
 .custom-container .product-container .product h3 {
@@ -312,6 +351,12 @@ body {
     flex-basis: 100%;
   }
 }
+
+.contact-section {
+  padding-bottom: 18vh;
+}
+
+
 
 
 /* profile page */
@@ -506,6 +551,7 @@ body {
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 75%, white) !important;
 }
 
+
 /* Shapes & Animation
 */
 .back-shapes {
@@ -528,7 +574,6 @@ body {
   animation-duration: 5s;
   -webkit-animation-duration: 5s;
   animation-iteration-count: infinite;
-  opacity: .55;
   -webkit-animation-iteration-count: infinite;
 }
 
@@ -536,31 +581,44 @@ body {
   display: inline-block;
   width: 39px;
   height: 39px;
-  background-image: url("https://img.icons8.com/color/48/joy-con.png");
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAABHNCSVQICAgIfAhkiAAAA0pJREFUWIXdmL1O40AQx8fZ5BxQCqRrLqKxqKjAOl0JvMHxBIjHyCu4dGkJ+khpQNa9QeTyZIkihbtYCKWwbC1KFXbtvYJxbrIYMOBD1o20UhDe//x2dnb2w1BKQVut25SQYRhG+Vs1NGLjvToI0yHNwKawFWV7L+yb4AhQFwC6QRB8tyzrxDTN3V6vN2SMfc3zPBVCLFar1d18Pp8eHR2FACCxvQ1UKfVqg8eIMADo+75/kKbphRDiVtUwIcRtmqYXvu8fAEAfdYxafmuC9TzPs5IkuSyK4qEOlG5FUTwkSXLpeZ4FAL06gHXA+mEYnkops1f851LKe6VU/tJHUsosDMNTjOKLgK+CxXE8KopCVDjhWZZNZrPZ2Xg83rdtewcABrZt74zH4/3ZbHaWZdlESskroijiOB69BvgSmBnH8ahq9JzzK8dxLBTvweZqLRdNDwD6juNYnPOrKh0ENJ8DfDbHwjA81SMmpUyiKDoHgO06iU0W0nYURedSykSPIE5xZQ5WCTLP8yw9x5bL5dR13b26yVw1YNd195bL5VQbcIaLhL0IV+ZZkiSXesQQrPtWME2767runh7BJEkuq/LvSdR83z/QywVO5Zf3gmmAX6IoOtem9wHr4Eb09M5mmqYXtCPn/AoAtgCg8xEw4qMDAFv6IknT9AIAzEo4HNWAVn4pJcdV+SQfPgjIHMexaJkRQtwCwIDOzkaHIAiO6WiyLJvUKZbvnN5+lmUT6i8IgmMaiA7ZZpllWSd0310sFr8AIFeo2JShXo76a0P/rPybwhmmae7Sj29ubn4DQN4kGLEc9deG/tfnwo0wc86vSZRz3JIanVI6tbZt7yiyF3POr4Gk0QYcLZBSynvQEvQf5N0ADwtKqcdCT+HotEKe52n5mzE2sG27sWN8ldm23WWMDar8A2DOYYIqIcSC/m80Gn0DmgPNmoH66wChf1UuQBo5tVqt7mjvw8PDH0BWT8PGUH9t6H9dGShcPp/Pp/Tj4XD4EwAYvVk1YajHUH9t6P9vddATtJU7BHZq595ajqjNp5L2nufK6LXyJEyFWnmHIKLtu31pgO27t+qArbvxa4DteyvRAD/9lanV73P/z8tmDVgAaMGb8GfYHwpq7kYvpXclAAAAAElFTkSuQmCC");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  opacity: 0.5;
 }
 
+.floating.square {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAABHNCSVQICAgIfAhkiAAAAUNJREFUWIXt2DFugzAUBuD/EVMGJMyQsZ3aA+QQ3ZjrIzKQgYWD5ACVOjRjBkBiSHF4XRJEIzmBCgiD/83Ysj9ZxrJNzIylRHQLREQAaMbxmTuz0WKUUk9Zlj0XRbHSWk8OEkKwlPKklNonSfLTYojISdP0JYqiz6kR16nr+o2Ivpi5cS4fy7JczQ25Hte51XDuCFOF1vpQVdWOiEb73ZiZfN/fCCHWgzBVVe3CMPwAcAQwBogAeHmeb6WU74Mw5xk5jozBrZk2Yjr5sxf8W0L3d4tFLWCLMcViTLEYUyzGFIsxxWJMsRhTFoXpc7iiPgejPv3ca2DEMDMB8C7FkTDeud9hGN/3N3meb6e4HQzGCCHWplP8VFnUAm4xQRCcHgHojisAgJkbpdS367qvc79CxHG8Z+YGAKh7JXr0+wwt6eXqFzNGfAM6wJFPAAAAAElFTkSuQmCC");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.5;
+}
 
 .floating.triangle {
   display: inline-block;
   width: 35px;
   height: 35px;
-  background-image: url("https://img.icons8.com/color/48/000000/museum.png");
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAjCAYAAAAJ+yOQAAAABHNCSVQICAgIfAhkiAAABARJREFUWIXNVj2IGlsU/sa/3XWDRWCICyFNTF4Rq7AQSJUmiKRN2rAuBlKlM03gRV4lj9hYmSLwigQMCA9iZcAmNrIpDLurNiNKoiiODE+HmXXezNz7ird3ubvPdf17cQ9MMXfunPud75zvniNQSnHZzbFqANPYUkEKguDY3t52C4Kw3OAppUt5ADjC4bBP1/U/w+GwD4Bjab6XBFAAsNZqtV5RSmmr1XoFYA2AcJlAOlOp1E3btgeUUmrb9iCVSt0E4LwUII9Z3FAU5T3lTFGU9wA2lsHmMkC6isXiA0qpTU+bXSwWHwBwrRQk/r0dNnVd/0rHmK7rXwFsLiqiRUF66vX6cx7Y0dGRxL/X6/XnADwrAQnAEYvF/KZpdhkgwzB+7O7u/mIYxg+2ZppmNxaL+Rdhc16AAoD1Xq+X4lmr1Wo7ADZrtdoOv97r9VIA1ucV0bwgnblc7i4hxGBANE0rHtefE8CmpmlF9o0QYuRyubvzXklzpRmAV1XVzxwIq1Ao3GdKBuAqFAr3CSEW26Oq6mcA3nnSPg9Id6VSecKns9/vv+PTycqh3++/4/dVKpUnANz/K0gAjlAodNUwjBMFW5alJBKJG2cZAuBIJBI3LMtS2F7DMKRQKHR1VjZnFctau91+zbPTbDZj510xADzNZjPG72+3269n7esziSWdTt+ybVtlB45Go0ogEDh34gHgCAQCvtFoVGH/2LatptPpW7OIaBYWNxRF+cizUi6XH13U9gC4yuXyI/4/RVE+ztLXpwXpKpVKDymlhB00GAw+TXMQC3AwGHzicJJSqfRw2r4+lVhEUbyi6/q3kxMIOcpkMsFpUwbAmclkgoSQI+ZD1/VvoihemUZE0xzgaTQaL/h0dTqdN7MUPxNdp9N5w/tpNBovpunrF7IYj8evW5YlM8emabaj0ei1ma8RwBGNRq+ZptlmvizLkuPx+PWLfF0U/bosy2/56CVJejbvVAPAI0nSM96fLMtvL+rrE8WSz+fvEUJM5lDTtL1F5kM2f2qatsd8EkLMfD5/b5KIJjpTVfULF/RSJu1xk7yqql8mBX+eI3e1Wn3Kp0VRlA+z3G0TQLI79wPvv1qtPj2vr49lMRKJiIZhfD+h0LaHyWTyNgDP8Si26ONJJpO3bdsesjMMw/geiUTEcWyyqQUAIAiCAMDT6XR+8/v9L9m6LMvZw8PDP3w+n4kl2XA4dAeDwR1RFB+ztW63+/vW1tavAP6mPLAzLDqz2ewdQohOV2CEED2bzd7BmSbxn1o5075+uo1rt6dYlCQpvEqAzCRJCvNsurgyIfv7+3sHBwcBXdcdlmUJy6q/ac3lclGv10sopX8BIGx9nHB+OrgxRikH7BTIy2r/AAlu0j5Iy8AaAAAAAElFTkSuQmCC");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  opacity: 0.5;
 }
 
 .floating.cross {
   display: inline-block;
   width: 35px;
   height: 35px;
-  background-image: url("https://img.icons8.com/color/48/popcorn.png");
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAlCAYAAADFniADAAAABHNCSVQICAgIfAhkiAAAAgJJREFUWIXN2MFO4zAQBuDfbSpaiUOvvTRS3w6EoEChwAvsZS9IvAnwOK5rV5V7Se8cNrOHNVXWpMk4caEj5dDInvkySeMkgohwbNH5aUBZJP4OIYQA0HU//9ABWllXo+MN7gDobzab+/V6fQbgxCWIDTqx1k6ttdPSGkQEBxUABsaYJ/oXuZTyGkAfgPgc12ZzNfpa6zkR5USUa63nfo3ihMRae0f/Ry6lvIkBKwHtalhrZwCSz7H+hU5u23V7Mpn8llKel7Y58JRpra/G4/EvB9wfjCMhIsoXi8Vtk47V5a08fZwEy+UyCNYE9AUVE9YUVIpiwmZVsDagvag2sLagShQTdlcsEANUiwqEJTFALBSzA/cAhjFAbBQHlmXZWwxQEIoB86MRKBhVgA2UUg8VsFwp9QBgEApqhHKwLoBhlmXvZaLtdvsKYAig2yj/ATs1/5ZOhV5T/n0sOorx73sv298EFgXk/mV771N1a2UwKmDpqLyjh8BigVhrH/uxJxaIO48Diwrizq97tI4O4uapeks6CKgt7GAgbl6l1NTPW5ycWGtnMUFc2Gq1ukTFy6gfZIx5TNP0GcAHuQqh4eZ9pGn6bIx5hPfC2+v1Tv0J+46mdYc4HTPGPMFbuEXx4AtfRC4AYDQavbTpUFl4NUShRr4b49c7hu9TX1DHEEf5efEvSKr5qd+QqggAAAAASUVORK5CYII=");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  opacity: 0.5;
 }
 
 @keyframes floating {
@@ -589,4 +647,22 @@ body {
   100% {
     -webkit-transform: translateY(0%);
   }
+}
+
+.bg-chat {
+  background: hsla(152, 100%, 50%, 1);
+  background: linear-gradient(90deg, hsla(152, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 40%, hsla(0, 0%, 98%, 1) 82%, hsla(0, 0%, 100%, 1) 100%);
+  background: -moz-linear-gradient(90deg, hsla(152, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 40%, hsla(0, 0%, 98%, 1) 82%, hsla(0, 0%, 100%, 1) 100%);
+  background: -webkit-linear-gradient(90deg, hsla(152, 100%, 50%, 1) 0%, hsla(186, 100%, 69%, 1) 40%, hsla(0, 0%, 98%, 1) 82%, hsla(0, 0%, 100%, 1) 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#00ff87", endColorstr="#60efff", GradientType=1);
+}
+
+.dance {
+  position: relative;
+  top: 100px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 60px;
+  color: #e67e22;
+  text-shadow: 2px 2px 3px #000;
 }

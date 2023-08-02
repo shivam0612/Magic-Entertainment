@@ -156,19 +156,22 @@
   margin-top: 20px;
 }
 
-.card-title{
+.card-title {
   font-weight: bold;
 }
-.card-text{
+
+.card-text {
   font-weight: 400;
 }
+
 .card-mshome {
   display: flex;
   width: 100%;
   margin: auto;
 }
-.card-mshome:hover{
-background-color: rgba(211, 211, 211, 0.537);
+
+.card-mshome:hover {
+  background-color: rgba(211, 211, 211, 0.537);
 }
 
 .card-mshome .col-md-4 {
@@ -231,49 +234,57 @@ background-color: rgba(211, 211, 211, 0.537);
     background-position: 50px 50px;
   }
 }
+
 @-moz-keyframes bg-scrolling-reverse {
   100% {
     background-position: 50px 50px;
   }
 }
+
 @-o-keyframes bg-scrolling-reverse {
   100% {
     background-position: 50px 50px;
   }
 }
+
 @keyframes bg-scrolling-reverse {
   100% {
     background-position: 50px 50px;
   }
 }
+
 @-webkit-keyframes bg-scrolling {
   0% {
     background-position: 50px 50px;
   }
 }
+
 @-moz-keyframes bg-scrolling {
   0% {
     background-position: 50px 50px;
   }
 }
+
 @-o-keyframes bg-scrolling {
   0% {
     background-position: 50px 50px;
   }
 }
+
 @keyframes bg-scrolling {
   0% {
     background-position: 50px 50px;
   }
 }
 
-.museum-title{
+.museum-title {
   font-size: 2rem;
   color: #444;
   margin-bottom: 1rem;
   text-transform: uppercase;
   text-align: center;
 }
+
 /* Main styles */
 .museum-page {
   /* img size is 50x50 */
@@ -305,7 +316,7 @@ background-color: rgba(211, 211, 211, 0.537);
   margin-bottom: 3rem;
   text-transform: uppercase;
   text-align: center;
-  text-shadow:0px  1px 2px black;
+  text-shadow: 0px 1px 2px black;
   font-weight: 900;
 
 }
@@ -547,12 +558,14 @@ background-color: rgba(211, 211, 211, 0.537);
 .chatheader {
   margin-bottom: 10px;
 }
-.chatheader h1{
+
+.chatheader h1 {
   font-size: 2rem;
   color: #444;
   margin-bottom: 1rem;
   text-transform: uppercase;
-  text-align: center;}
+  text-align: center;
+}
 
 .chat-main {
   display: flex;
@@ -564,26 +577,32 @@ background-color: rgba(211, 211, 211, 0.537);
   width: 60vw;
   margin: auto;
   overflow-y: auto;
-  max-height: 50vh; /* Adjust this value as needed */
+  height: 50vh;
+  /* Adjust this value as needed */
 }
+
 .cmessage {
   border-radius: 8px;
   padding: 8px;
   margin-bottom: 10px;
   max-width: 80%;
   text-align: left;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Add box shadow */
 }
 
 .sent {
   background-color: #d1ecf1;
-  align-self: flex-end; /* Align sent messages to the right */
+  align-self: flex-end;
+  /* Align sent messages to the right */
 }
 
 .received {
   background-color: #f8f9fa;
-  align-self: flex-start; /* Align received messages to the left */
-  border: 1px solid #ccc; /* Add border to received messages */
+  align-self: flex-start;
+  /* Align received messages to the left */
+  border: 1px solid #ccc;
+  /* Add border to received messages */
 }
 
 
@@ -609,19 +628,6 @@ background-color: rgba(211, 211, 211, 0.537);
   padding: 5px;
   border-radius: 50%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* game home page */
@@ -676,11 +682,12 @@ background-color: rgba(211, 211, 211, 0.537);
   border-radius: 10px;
 }
 
-.game-card:hover{
+.game-card:hover {
   outline-offset: 0;
   background-color: #e0f2f1;
 }
-.game-card img:hover{
+
+.game-card img:hover {
   border: 0.1rem solid black;
   transform: scale(.95);
 }
@@ -791,7 +798,8 @@ background-color: rgba(211, 211, 211, 0.537);
   gap: 5px;
   background-color: #e0f2f1;
   box-shadow: 1px 2px 4px #333;
-  border: 2px double black;padding: 5px;
+  border: 2px double black;
+  padding: 5px;
 }
 
 .tile {
@@ -822,23 +830,3 @@ background-color: rgba(211, 211, 211, 0.537);
   padding: 0.4rem;
   width: 5rem;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

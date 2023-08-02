@@ -27,10 +27,26 @@ const analytics = firebase.analytics();
 const auth = getAuth();
 
 function ChatHome() {
+  const queryParams = new URLSearchParams(location.search); // Get the URL query parameters
+  const showGlobalChatParam = queryParams.get('showGlobalChat'); // Get the value of showGlobalChat from query parameters
+  const [chatMessage, setChatMessage] = useState('Message Now - Global chat');
+  const [showGlobalChat, setShowGlobalChat] = useState(false); // Step 1: Toggle state for ChatHome2
+
+  useEffect(() => {
+    if (showGlobalChat) {
+      setChatMessage('Common Interest');
+    } else {
+      setChatMessage('Global chat');
+    }
+  }, [showGlobalChat]);
+
+
   const dummy = useRef(null);
   const messagesRef = firestore.collection('messages');
   const query = messagesRef.orderBy('createdAt').limit(25);
-  const [showGlobalChat, setShowGlobalChat] = useState(false); // Step 1: Toggle state for ChatHome2
+  useEffect(() => {
+    setShowGlobalChat(showGlobalChatParam === 'true');
+  }, [showGlobalChatParam]);
 
   const [messages] = useCollectionData(query, { idField: 'id' });
   const [formValue, setFormValue] = useState('');
@@ -41,7 +57,7 @@ function ChatHome() {
     setShowGlobalChat((prev) => !prev); // Step 2: Toggle the state on button click
   };
 
-  
+
   useEffect(() => {
     signInAnonymously(auth)
       .then(() => {
@@ -84,10 +100,10 @@ function ChatHome() {
     <>
       <Container className="App-chat  " >
         <div className='chatheader'>
-          <h1>🔥Message Now💬</h1>
+        <h1>🔥Message Now💬 ~ {chatMessage} </h1>
           {/* Step 2: Toggle button */}
           <Button onClick={handleToggle} variant="primary">
-            {showGlobalChat ?  'Global chat' : 'People with similar interest'}
+          {showGlobalChat ? 'Global chat' : 'People with similar interest'}
           </Button>
         </div>
 
