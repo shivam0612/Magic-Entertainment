@@ -25,6 +25,7 @@ const MSHome = () => {
     const fetchData = async () => {
       try {
         const res = await refetch();
+        console.log(res)
         console.log(res);
       } catch (error) {
         console.log(error);
@@ -161,7 +162,7 @@ const MSHome = () => {
           <div className="col-md-4">
             <div className="position-relative">
               <img
-                src={`http://localhost:5000/${video.thumbnail}`}
+                src={`${video.thumbnail}`}
                 className="card-img"
                 alt={video.title}
                 onClick={() => openVideo(`http://localhost:5000/${video.filePath}`)}

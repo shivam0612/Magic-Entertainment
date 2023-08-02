@@ -121,6 +121,7 @@ const UploadVideoPage = () => {
         toast.error('An error occurred while uploading the video');
       });
   };
+  const [defaultThumbnail, setDefaultThumbnail] = useState('https://www.teachhub.com/wp-content/uploads/2019/10/Our-Top-10-Songs-About-School-1024x759.png');
 
   const onDrop = (files) => {
     let formData = new FormData();
@@ -129,37 +130,64 @@ const UploadVideoPage = () => {
     };
 
     formData.append('file', files[0]);
-    axios
-      .post('/api/video/uploadfiles', formData, config)
-      .then((response) => {
-        if (response.data.success) {
-          let variable = {
-            filePath: response.data.filePath,
-            fileName: response.data.fileName,
-          };
-          setFilePath(response.data.filePath);
+    const fileExtension = files[0].name.split('.').pop().toLowerCase();
 
-          // Create the thumbnail to display the uploaded video
-          axios
-            .post('/api/video/thumbnail', variable)
-            .then((response) => {
-              if (response.data.success) {
-                setDuration(response.data);
-                setThumbnail(response.data.thumbsFilePath);
-              } else {
-                toast.error('Failed to create the thumbnail');
-              }
-            })
-            .catch((error) => {
-              toast.error('An error occurred while creating the thumbnail');
-            });
-        } else {
-          toast.error('Video failed to save on the server');
-        }
-      })
-      .catch((error) => {
-        toast.error('An error occurred while uploading the video file');
-      });
+    if (fileExtension === 'mp3') {
+      // Set the default thumbnail for MP3 files
+      setThumbnail(defaultThumbnail);
+      console.log(defaultThumbnail)
+
+      axios
+        .post('/api/audio/uploadfiles', formData, config)
+        .then((response) => {
+          if (response.data.success) {
+            setFilePath(response.data.filePath);
+            setDuration(response.data.fileDuration);
+          } else {
+            toast.error('Audio failed to save on the server');
+          }
+        })
+        .catch((error) => {
+          toast.error('An error occurred while uploading the audio file');
+        });
+    } else if (fileExtension === 'mp4') {
+      // Call the existing function to upload the video
+
+      axios
+        .post('/api/video/uploadfiles', formData, config)
+        .then((response) => {
+          if (response.data.success) {
+            let variable = {
+              filePath: response.data.filePath,
+              fileName: response.data.fileName,
+            };
+            setFilePath(response.data.filePath);
+
+            // Create the thumbnail to display the uploaded video
+            axios
+              .post('/api/video/thumbnail', variable)
+              .then((response) => {
+                if (response.data.success) {
+                  setDuration(response.data.fileDuration);
+                  setThumbnail(`http://localhost:5000/${response.data.thumbsFilePath}`);
+                } else {
+                  toast.error('Failed to create the thumbnail');
+                }
+              })
+              .catch((error) => {
+                toast.error('An error occurred while creating the thumbnail');
+              });
+          } else {
+            toast.error('Video failed to save on the server');
+          }
+        })
+        .catch((error) => {
+          toast.error('An error occurred while uploading the video file');
+        });
+    } else {
+      // Handle unsupported file formats or show an error message
+      toast.error('Unsupported file format');
+    }
   };
 
   return (
@@ -195,7 +223,7 @@ const UploadVideoPage = () => {
 
           {thumbnail !== '' && (
             <div>
-              <img src={`http://localhost:5000/${thumbnail}`} alt="haha" />
+              <img width=" 320px" height="auto" src={`${thumbnail}`} alt="haha" />
             </div>
           )}
         </div>
@@ -230,7 +258,7 @@ const UploadVideoPage = () => {
         </select>
         <br /><br />
 
-        <div style={{ display: 'flex', justifyContent: 'space-evenly', width:'50%', margin:'auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '50%', margin: 'auto' }}>
           <Button type="primary" size="large" onClick={onSubmit}>
             Submit
           </Button>

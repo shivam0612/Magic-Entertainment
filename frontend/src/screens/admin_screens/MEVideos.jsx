@@ -65,7 +65,7 @@ const MEVideos = () => {
                 <td>{video.description}</td>
                 <td>
                   <img
-                    src={`http://localhost:5000/${video.thumbnail}`}
+                    src={video.thumbnail}
                     alt='Thumbnail'
                     style={{ width: '100px', height: 'auto', cursor: 'pointer' }}
                     onClick={() => handleThumbnailClick(video)}

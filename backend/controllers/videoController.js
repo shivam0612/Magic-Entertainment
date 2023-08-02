@@ -5,6 +5,7 @@ ffmpeg.setFfmpegPath('C:/Users/Administrator/Music/ffmpeg/bin/ffmpeg.exe');
 ffmpeg.setFfprobePath('C:/Users/Administrator/Music/ffmpeg/bin/ffprobe.exe');
 import Video from '../models/Video.js'
 import Subscription from '../models/subscriptionModel.js';
+import { uploadAudioFiles } from './audioController.js';
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -25,6 +26,8 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage }).single('file');
 
+
+  
 const uploadFiles = asyncHandler(async (req, res) => {
     upload(req, res, (err) => {
         if (err) {
@@ -138,5 +141,5 @@ const deleteVideo = asyncHandler(async (req, res) => {
 });
 
 export {
-    uploadFiles, tumbnailsOfVideo, UploadVideo, getVideos, getVideosToAdmin, deleteVideo
+    uploadFiles, tumbnailsOfVideo, UploadVideo, getVideos, getVideosToAdmin, deleteVideo,uploadAudioFiles
 }
