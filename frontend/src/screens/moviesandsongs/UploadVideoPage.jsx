@@ -56,6 +56,7 @@ const UploadVideoPage = () => {
   const [filePath, setFilePath] = useState('');
   const [duration, setDuration] = useState('');
   const [thumbnail, setThumbnail] = useState('');
+  const [defaultThumbnail, setDefaultThumbnail] = useState('https://www.teachhub.com/wp-content/uploads/2019/10/Our-Top-10-Songs-About-School-1024x759.png');
 
   const handleChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -84,45 +85,73 @@ const UploadVideoPage = () => {
       return;
     }
 
-    if (
-      title === '' ||
-      description === '' ||
-      categories === '' ||
-      filePath === '' ||
-      duration === '' ||
-      thumbnail === ''
-    ) {
-      toast.error('Fill in all fields before submitting!');
-      return;
-    }
+    if (filePath.includes(".mp3")) {
+      if (title === '' || description === '' || filePath === '') {
+        toast.error('Fill in all fields before submitting!');
+        return;
+      }
 
-    const variables = {
-      user: userInfo.name,
-      title: title,
-      description: description,
-      privacy: privacy,
-      filePath: filePath,
-      category: categories,
-      duration: duration['fileDuration'],
-      thumbnail: thumbnail,
-    };
+      // For audio files, use the variabless object
+      const variables = {
+        user: userInfo.name,
+        title: title,
+        description: description,
+        privacy: privacy,
+        filePath: filePath,
+        category: categories,
+        duration: "",
+        thumbnail: defaultThumbnail,
+      };
+      console.log(variables)
 
     axios
-      .post('/api/video/uploadVideo', variables)
-      .then((response) => {
-        if (response.data.success) {
-          toast.success('Video uploaded successfully!');
-          navigate('/mshome');
-        } else {
-          toast.error('Failed to upload video');
-        }
-      })
-      .catch((error) => {
-        toast.error('An error occurred while uploading the video');
-      });
-  };
-  const [defaultThumbnail, setDefaultThumbnail] = useState('https://www.teachhub.com/wp-content/uploads/2019/10/Our-Top-10-Songs-About-School-1024x759.png');
+        .post('/api/video/uploadVideo', variables)
+        .then((response) => {
+          if (response.data.success) {
+            toast.success('audio uploaded successfully!');
+            navigate('/mshome');
+          } else {
+            toast.error('Failed to upload audio');
+          }
+        })
+        .catch((error) => {
+          toast.error('An error occurred while uploading the video');
+        });
+    } else if (filePath.includes(".mp4")) {
+      if (title === '' || description === '' || filePath === '' || thumbnail === '') {
+        toast.error('Fill in all fields before submitting!');
+        return;
+      }
 
+      // For video files, use the variables object
+      const variables = {
+        user: userInfo.name,
+        title: title,
+        description: description,
+        privacy: privacy,
+        filePath: filePath,
+        category: categories,
+        duration: duration['fileDuration'],
+        thumbnail: thumbnail,
+      };
+
+      axios
+        .post('/api/video/uploadVideo', variables)
+        .then((response) => {
+          if (response.data.success) {
+            toast.success('Video uploaded successfully!');
+            navigate('/mshome');
+          } else {
+            toast.error('Failed to upload video');
+          }
+        })
+        .catch((error) => {
+          toast.error('An error occurred while uploading the video');
+        });
+    } else {
+      toast.error('Unsupported file format');
+    }
+  };
   const onDrop = (files) => {
     let formData = new FormData();
     const config = {
@@ -133,23 +162,23 @@ const UploadVideoPage = () => {
     const fileExtension = files[0].name.split('.').pop().toLowerCase();
 
     if (fileExtension === 'mp3') {
-      // Set the default thumbnail for MP3 files
-      setThumbnail(defaultThumbnail);
-      console.log(defaultThumbnail)
-
       axios
-        .post('/api/audio/uploadfiles', formData, config)
+        .post('/api/video/uploadfiles', formData, config)
         .then((response) => {
           if (response.data.success) {
+            let variable = {
+              filePath: response.data.filePath,
+              fileName: response.data.fileName,
+            };
             setFilePath(response.data.filePath);
-            setDuration(response.data.fileDuration);
-          } else {
-            toast.error('Audio failed to save on the server');
+            
+            setThumbnail(defaultThumbnail)
+            
           }
-        })
-        .catch((error) => {
-          toast.error('An error occurred while uploading the audio file');
+        })  .catch((error) => {
+          toast.error(error);
         });
+
     } else if (fileExtension === 'mp4') {
       // Call the existing function to upload the video
 

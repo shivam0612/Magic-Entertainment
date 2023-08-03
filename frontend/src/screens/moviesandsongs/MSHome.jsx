@@ -25,8 +25,8 @@ const MSHome = () => {
     const fetchData = async () => {
       try {
         const res = await refetch();
-        console.log(res)
-        console.log(res);
+        // console.log(res)
+        // console.log(res);
       } catch (error) {
         console.log(error);
         alert('Error occurred while fetching data');
@@ -75,6 +75,7 @@ const MSHome = () => {
     const handleDownload = (videoId) => {
       window.open(videoId, '_blank'); // Open the modified URL in a new tab
     };
+  const isAudioFile = (filePath) => /\.(mp3|m4a)$/i.test(filePath);
 
     return videos.map((video) => (
       <div
@@ -109,6 +110,7 @@ const MSHome = () => {
   };
 
   const renderVideosFromDatabase = () => {
+    
     if (isLoading) {
       return <p>Loading videos...</p>;
     }

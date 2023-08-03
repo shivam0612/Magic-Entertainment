@@ -3,50 +3,68 @@ import multer from 'multer';
 import path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
 
-const storage = multer.diskStorage({
+var storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+      cb(null, 'uploads/');
   },
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()}_${file.originalname}`);
+      cb(null, `${Date.now()}_${file.originalname}`);
   },
   fileFilter: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    if (ext !== '.mp3') {
-      return cb(res.status(400).end('Only MP3 is supported'), false);
-    }
-    cb(null, true);
+      const ext = path.extname(file.originalname);
+      if (ext !== '.mp3') {
+          return cb(res.status(400).end('Only MP4 is supported'), false);
+      }
+      cb(null, true);
   },
 });
 
-const upload = multer({ storage: storage }).single('file');
 
-const getAudioDurationInSeconds = (filePath) => {
-  return new Promise((resolve, reject) => {
-    ffmpeg.ffprobe(filePath, (err, metadata) => {
-      if (err) {
-        reject(err);
-      } else {
-        const fileDuration = metadata.format.duration;
-        resolve(fileDuration);
-      }
-    });
-  });
-};
+var upload = multer({ storage: storage }).single('file');
 
-const uploadAudioFiles = asyncHandler(async (req, res) => {
-    upload(req, res, (err) => {
+
+
+const uploadFiles = asyncHandler(async (req, res) => {
+  upload(req, res, (err) => {
       if (err) {
-        return res.json({ success: false, err });
+          return res.json({ success: false, err });
       }
       return res.json({
-        success: true,
-        filePath: res.req.file.path,
-        fileName: res.req.file.filename,
-        fileDuration: getAudioDurationInSeconds(res.req.file.path), // Function to get audio duration
+          success: true,
+          filePath: res.req.file.path,
+          fileName: res.req.file.filename,
       });
-    });
   });
+})
 
+
+const uploadAudioFiles = asyncHandler(async (req, res) => {
+  upload(req, res, async function (err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(400).json({ success: false, error: err.message });
+    } else if (err) {
+      return res.status(400).json({ success: false, error: err.message });
+    }
+
+    const filePath = req.file.path;
+    let fileDuration;
+    try {
+      fileDuration = await getAudioDurationInSeconds(filePath);
+    } catch (err) {
+      console.error("Error getting audio duration:", err);
+      fileDuration = 0;
+    }
+
+    const video = new Video(req.body);
+    video.duration = fileDuration;
+
+    try {
+      await video.save();
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+  });
+});
 
 export { uploadAudioFiles };
