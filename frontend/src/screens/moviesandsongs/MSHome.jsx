@@ -142,12 +142,22 @@ const MSHome = () => {
     const handleDownload = async (videoId, title) => {
       try {
         const response = await fetch(videoId);
+        const lastThreeCharacters = videoId.slice(-3);
+
         const blob = await response.blob();
         // console.log(response)
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${title}.mp4`; // You can customize the filename here, e.g., 'my_video.mp4'
+// console.log(lastThreeCharacters)
+        if(lastThreeCharacters == 'mp3'){
+          a.download = `${title}.mp3`; // You can customize the filename here, e.g., 'my_video.mp4'
+        }
+        else{
+          a.download = `${title}.mp4`; // You can customize the filename here, e.g., 'my_video.mp4'
+        }
+
+
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
