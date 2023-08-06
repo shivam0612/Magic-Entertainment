@@ -160,18 +160,7 @@ const LoginScreen = () => {
                   Sign in
                 </button>
 
-                <div className="divider d-flex align-items-center my-4">
-                  <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-                </div>
-
-                <div className='d-flex justify-content-between'>
-                  <a className=" btn btn-primary btn-lg" style={{ backgroundColor: '#3b5998' }} href="#!" role="button">
-                    Continue with Facebook
-                  </a>
-                  <a className="btn btn-primary btn-lg" style={{ backgroundColor: '#55acee', marginLeft: "auto" }} href="#!" role="button">
-                    Continue with Twitter
-                  </a>
-                </div>
+              
               </form>
               {isLoading && <Loader />}
 

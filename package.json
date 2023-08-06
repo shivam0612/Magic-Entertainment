@@ -1,8 +1,8 @@
 {
-  "name": "mern-auth",
+  "name": "Magic-Entertainment",
   "version": "1.0.0",
   "type": "module",
-  "description": "MERN authentication system",
+  "description": "Magic Entertainment system",
   "main": "server.js",
   "scripts": {
     "start": "node backend/server.js",

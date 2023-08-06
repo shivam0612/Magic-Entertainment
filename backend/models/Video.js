@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 const videoSchema = mongoose.Schema({
-    writer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+    user: {
+        type:String,
+        maxlength: 50 
     },
     title: {
         type:String,

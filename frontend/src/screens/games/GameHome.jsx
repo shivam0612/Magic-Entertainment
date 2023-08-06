@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const GameHome = () => {
   const navigate = useNavigate()
@@ -35,6 +36,9 @@ const GameHome = () => {
   ];
 
   const handleCardClick = (route) => {
+    if(route === '/gamehome'){
+      toast.info('New Games Coming Soon')
+    }
     navigate(route);
   };
 

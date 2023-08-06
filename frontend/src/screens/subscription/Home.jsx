@@ -61,7 +61,7 @@ const Home = () => {
       <h1 className="subscriptions-title">Subscription Details</h1>
 
       {subscriptionDates ? (
-        <div className="subscriptions-card">
+        <div className="subscriptions-card mt-5 mb-5 shadow">
           <div className="subscriptions-card-body">
             <h5 className="subscriptions-card-title">Subscription Dates</h5>
             <div className="subscriptions-details">

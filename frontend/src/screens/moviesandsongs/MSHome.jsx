@@ -26,7 +26,9 @@ const MSHome = () => {
       try {
         const res = await refetch();
         // console.log(res)
-        // console.log(res);
+        setIsSubscribed(res.data.videos !== null);
+
+     
       } catch (error) {
         console.log(error);
         alert('Error occurred while fetching data');
@@ -35,6 +37,8 @@ const MSHome = () => {
 
     fetchData();
   }, []);
+    const [isSubscribed, setIsSubscribed] = useState(true);
+   
 
   const handleAddVideos = () => {
     navigate('/video/upload');
@@ -75,7 +79,7 @@ const MSHome = () => {
     const handleDownload = (videoId) => {
       window.open(videoId, '_blank'); // Open the modified URL in a new tab
     };
-  const isAudioFile = (filePath) => /\.(mp3|m4a)$/i.test(filePath);
+    const isAudioFile = (filePath) => /\.(mp3|m4a)$/i.test(filePath);
 
     return videos.map((video) => (
       <div
@@ -110,7 +114,7 @@ const MSHome = () => {
   };
 
   const renderVideosFromDatabase = () => {
-    
+
     if (isLoading) {
       return <p>Loading videos...</p>;
     }
@@ -139,7 +143,7 @@ const MSHome = () => {
       try {
         const response = await fetch(videoId);
         const blob = await response.blob();
-    // console.log(response)
+        // console.log(response)
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -152,7 +156,7 @@ const MSHome = () => {
         console.log('Error while downloading video:', error);
       }
     };
-    
+
 
     return videoss.videos.map((video) => (
       <div
@@ -165,10 +169,12 @@ const MSHome = () => {
             <div className="position-relative">
               <img
                 src={`${video.thumbnail}`}
-                className="card-img"
+                className="card-img shadow"
                 alt={video.title}
                 onClick={() => openVideo(`http://localhost:5000/${video.filePath}`)}
               />
+              <p className='pt-1 mb-1 mt-1'>User: {video.user}</p>
+
               {/* {`http:localhost:5000/${video.filePath}`} */}
             </div>
           </div>
@@ -176,7 +182,7 @@ const MSHome = () => {
             <div className="card-body">
               <h5 className="card-title" style={{ marginBottom: '8px', maxHeight: '3rem', overflow: 'hidden', textOverflow: 'ellipsis' }}>{video.title}</h5>
               <p className="card-text" style={{ overflow: "hidden" }}>{video.description}</p>
-              <button className="download-btn border-0" style={{ backgroundColor: "transparent" }} onClick={() => handleDownload(`http://localhost:5000/${video.filePath}`,`${video.title}`)}>
+              <button className="download-btn border-0" style={{ backgroundColor: "transparent" }} onClick={() => handleDownload(`http://localhost:5000/${video.filePath}`, `${video.title}`)}>
                 <img height={30} width={30} src={img} alt='img-download' />
               </button>
             </div>
@@ -195,6 +201,9 @@ const MSHome = () => {
     setActiveSection('me');
     setIsYouTubeVideo(true);
   };
+  const isAudioFile = (filePath) => /\.(mp3|m4a)$/i.test(filePath);
+
+
 
   return (
     <div style={{ width: '90%', margin: 'auto' }}>
@@ -214,6 +223,16 @@ const MSHome = () => {
                   frameBorder="0"
                   allowFullScreen
                 ></iframe>
+                {isAudioFile(selectedVideo) && (
+                  <div
+                    className="audio-background"
+                    style={{
+                      backgroundColor: 'red',
+                      // Add other custom styles for the background container
+                    }}
+                  />
+                )}
+
               </div>
             ) : (
               <div>
@@ -243,9 +262,24 @@ const MSHome = () => {
             <button className='closevideo-btn' onClick={() => setSelectedVideo(null)}>
               Close Video
             </button>
-            <button className="addvideo-btn" onClick={handleAddVideos}>
-              Add Videos
-            </button>
+            {isSubscribed ? (
+              <button
+                className="addvideo-btn"
+                onClick={handleAddVideos}
+              >
+                Add Videos | Song
+              </button>
+            )
+              :
+              (
+                <button
+                  className="addvideo-btn"
+                  onClick={handleAddVideos}
+                  disabled
+                >
+                  Add Videos | Song
+                </button>
+              )}
           </div>
         </div>
         <div className="pt-5" style={{ flex: '1', textAlign: 'center' }}>

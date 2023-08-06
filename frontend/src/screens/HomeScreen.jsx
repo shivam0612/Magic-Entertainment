@@ -18,25 +18,32 @@ const HomeScreen = () => {
     {
       title: 'Online Games',
       description: 'Explore a wide variety of online games and enjoy hours of entertainment.',
+      path: '/gamehome',
     },
     {
       title: 'Online Movies',
       description: 'Watch the latest movies and shows online from the comfort of your home.',
+      path: '/homepageofms',
     },
     {
       title: 'Virtual Museum',
       description: 'Explore historical artifacts and artworks through our immersive virtual museum experience.',
+      path: '/mhome',
     },
     // Add more services as needed
   ];
 
+  const handleServiceClick = (path) => {
+    navigate(path); // Redirect to the respective service page
+  };
+
   const renderServiceItems = () => {
     return images.map((image, index) => (
-      <Card className="service-item mx-3 border-0" key={index}>
-        <Card.Img className='shadow' variant="top" src={image} alt={`Service ${index + 1}`} />
+      <Card className="service-item mx-3 border-0" key={index} style={{cursor:"pointer"}}>
+        <Card.Img onClick={() => handleServiceClick(services[index].path)} className='shadow' variant="top" src={image} alt={`Service ${index + 1}`} />
         <Card.Body>
           <Card.Title className='fw-bold'>{services[index].title}</Card.Title>
-          <Card.Text>{services[index].description}</Card.Text>
+          <Card.Text style={{height:"5rem"}}>{services[index].description}</Card.Text>
         </Card.Body>
       </Card>
     ));
@@ -71,7 +78,7 @@ const HomeScreen = () => {
   };
 
   const openbutton = () => {
-    navigate('/chathome')
+    navigate('/contact')
   }
 
   
@@ -82,7 +89,7 @@ const HomeScreen = () => {
         <div className="right-side"></div>
         <div className="welcome-text text-center ">
           <span>
-            <p className='mb-2 '>Welcome To Our Portal</p>
+            <p className='mb-2 '>Magic Show Entertainment Portal</p>
             <a href='#service' className='text-decoration-none'>
               <FontAwesomeIcon
                 icon={faChevronDown}

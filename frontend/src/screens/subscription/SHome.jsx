@@ -219,8 +219,8 @@ const SHome = () => {
         onRequestClose={() => setIsModalOpen(false)}
         contentLabel='Payment Modal'
       >
-        <h2>Payment Modal</h2>
-        <p>Selected Option: {selectedOption}</p>
+        <h2 style={{fontWeight:"bold", fontSize:"2.5rem"}} className='mb-2'>Payment Page</h2>
+        <p style={{fontSize:"1.2rem"}}>Selected Option: <span style={{fontWeight:"700"}} className='text-success'>{selectedOption}</span></p>
         <PayPalScriptProvider options={{ 'client-id': 'ATDSGAXke38nPQeADKr31CbwCNMbknXVpdyswqcOoeTkrmdMULzmnTSGSQFfSu_ETDLKdMG5SZBfgzpb' }}>
         <PayPalButtons
             createOrder={(data, actions) => {
@@ -238,11 +238,11 @@ const SHome = () => {
             }}
             onApprove={handleApprovePayment}
             onError={handleError}
-            style={{ layout: 'vertical' }}
+            style={{ layout: 'vertical',  }}
           />
 
         </PayPalScriptProvider>
-        <button onClick={() => setIsModalOpen(false)}>Close</button>
+        <button className='btn btn-danger centered-text' style={{marginLeft:"0%"}} onClick={() => setIsModalOpen(false)}>Close</button>
       </Modal>
     </div>
   );

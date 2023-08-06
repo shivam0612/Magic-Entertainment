@@ -3,12 +3,19 @@ import Gaming from '../images/gaming.png';
 import karaoke from '../images/Karaoke.jpg';
 import MandS from '../images/manss.jpg';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ServiceScreen = () => {
   const navigate = useNavigate();
 
   const handleCardClick = (serviceName) => {
-    navigate(`/${serviceName}`);
+
+    if (serviceName === 'others') {
+      toast.info('New Service Coming Soon');
+    }
+    else {
+      navigate(`/${serviceName}`);
+    }
   };
 
   return (
@@ -38,7 +45,7 @@ const ServiceScreen = () => {
             <h3>Gaming</h3>
             <div className="availability">Play, Win, Repeat, Dominate, Conquer</div>
           </div>
-   
+
           <div className="product shadow" data-name="p-4" onClick={() => handleCardClick('others')}>
             <img
               src="https://images.unsplash.com/photo-1497005367839-6e852de72767?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=867&q=80"
