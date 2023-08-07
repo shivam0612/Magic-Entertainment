@@ -125,6 +125,7 @@ const RegisterScreen = () => {
         const res = await register(payload).unwrap();
         dispatch(setCredentials({ ...res }));
         navigate('/');
+        toast.success('Successfully Registered')
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -210,6 +211,7 @@ const RegisterScreen = () => {
                             value={preference}
                             onChange={(e) => setPreference(e.target.value)}
                             id="preference"
+                            style={{width:"90%",marginLeft:"2.6rem"}}
                           >
                             <option value="Other">Other</option>
                             <option value="Music">Music</option>
@@ -217,7 +219,7 @@ const RegisterScreen = () => {
                             <option value="Games">Games</option>
                             <option value="Singing">Singing</option>
                           </select>
-                          <label className="form-label" style={{ marginLeft: '1em' }} htmlFor="preference">Preference</label>
+                          <label className="form-label" style={{ marginLeft: '2.6rem' }} htmlFor="preference">Preference</label>
                         </div>
 
                         <div className="d-flex flex-row align-items-center mb-2">

@@ -21,7 +21,7 @@ const HomeScreen = () => {
       path: '/gamehome',
     },
     {
-      title: 'Online Movies',
+      title: 'Online Movies and Songs',
       description: 'Watch the latest movies and shows online from the comfort of your home.',
       path: '/homepageofms',
     },

@@ -37,9 +37,9 @@ const ResetPasswordScreen = () => {
   };
 
   return (
-    <div>
+    <div className='mt-5' style={{width:"60vw", margin:"auto",textAlign:"center"}}>
       <h2>Reset Password</h2>
-      <Form onSubmit={handleResetPassword}>
+      <Form className='border-1 shadow mt-5 p-5' style={{borderRadius:"10px"}} onSubmit={handleResetPassword} >
         <Form.Group controlId="password">
           <Form.Label>New Password</Form.Label>
           <Form.Control
@@ -59,7 +59,7 @@ const ResetPasswordScreen = () => {
           />
         </Form.Group>
         {error && <div className="text-danger">{error}</div>}
-        <Button type="submit">Reset Password</Button>
+        <Button className='mt-5' type="submit">Reset Password</Button>
       </Form>
     </div>
   );

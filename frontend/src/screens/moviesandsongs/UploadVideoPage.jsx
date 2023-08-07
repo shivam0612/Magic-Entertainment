@@ -102,7 +102,7 @@ const UploadVideoPage = () => {
         duration: "",
         thumbnail: defaultThumbnail,
       };
-      console.log(variables)
+      // console.log(variables)
 
     axios
         .post('/api/video/uploadVideo', variables)
