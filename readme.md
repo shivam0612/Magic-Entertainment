@@ -1,12 +1,11 @@
 # Magic Entertainment Portal
 
-# Features Completed:
-- Login and Registration
-- Authentication
-- Profile section with updating the profile
-- service page
-- home page
-- contact us page
+# Features:
+- Login and Registration with Authentication
+- Profile section 
+- Service page
+- Contact Page
+  
 - Services:
     **Movies and Song Page**
       - Upload a video {for movies and songs services}
@@ -16,13 +15,9 @@
     **Museum Page**
       - Get to know about different Artworks
     **Subscription Page**
-      - To be Developed
-
+      - User can subscribe with different options and payment method
     **Online Games Page**
-      - To be Developed
-# Upcoming Features:
-- Subscription Feature
-- UI improvement -> Virtual Museum, Subscription Feature, Movies and Song Feature
+      - Different Board games that can be played on your browsers
 
 # Steps to Run PRoject:
   # Run Server
