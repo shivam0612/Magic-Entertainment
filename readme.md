@@ -1,15 +1,15 @@
-🌟 Welcome to the Magic Entertainment Portal! 🌟
+#🌟 Welcome to the Magic Entertainment Portal! 🌟
 
-🚀 About Me:
+#🚀 About Me:
 Enthusiastic developer passionate about creating immersive digital experiences. Specializing in full-stack development with a focus on innovative solutions. Currently, I'm the creative mind behind the Magic Entertainment Portal, where magic meets technology.
 
-🔗 Features:
+#🔗 Features:
 ✨ Login and Registration with Authentication
 ✨ Profile section
 ✨ Service page
 ✨ Contact Page
 
-🎉 Services:
+#🎉 Services:
 Movies and Song Page
 
 📽️ Upload a video {for movies and songs services}
@@ -17,13 +17,13 @@ Movies and Song Page
 📚 Explore the Database Videos in Page
 🏠 Home Page for Movies and Songs
 
-Museum Page
+#Museum Page
 🖼️ Get to know about different Artworks
 
-Subscription Page
+#Subscription Page
 💳 Users can subscribe with different options and payment methods
 
-Online Games Page
+#Online Games Page
 🎲 Dive into different Board games that can be played on your browsers
 
 
