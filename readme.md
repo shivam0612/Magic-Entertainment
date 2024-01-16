@@ -17,13 +17,13 @@ Movies and Song Page
 📚 Explore the Database Videos in Page<br/>
 🏠 Home Page for Movies and Songs<br/>
 
-#Museum Page
+#Museum Page<br/>
 🖼️ Get to know about different Artworks
 
-#Subscription Page
+#Subscription Page<br/>
 💳 Users can subscribe with different options and payment methods
 
-#Online Games Page
+#Online Games Page<br/>
 🎲 Dive into different Board games that can be played on your browsers
 
 
