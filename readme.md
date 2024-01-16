@@ -1,6 +1,6 @@
 #🌟 Welcome to the Magic Entertainment Portal! 🌟
 
-#🚀 About Me:
+#🚀 About Me:_
 Enthusiastic developer passionate about creating immersive digital experiences. Specializing in full-stack development with a focus on innovative solutions. Currently, I'm the creative mind behind the Magic Entertainment Portal, where magic meets technology.
 
 #🔗 Features:
